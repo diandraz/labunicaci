@@ -7,6 +7,8 @@
     --text-dark: #222;
     --text-muted: #777;
     --info-blue: #4dabf7;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
 }
 
 /* ======= GLOBAL ======= */
@@ -24,33 +26,43 @@ body {
     color: var(--primary-color);
     font-size: 2rem;
     margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
 }
 
 /* ======= CARD STYLING ======= */
 .card {
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     overflow: hidden;
-    background-color: var(--white);
+    background: var(--white);
     border: none;
     margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
     font-weight: 600;
     font-size: 1.1rem;
     padding: 0.75rem 1rem;
+    background-color: #f5f5f5;
+    color: var(--text-dark);
+    border-bottom: 1px solid #eee;
 }
 
 /* Tambah Data Card */
 .card-header.bg-primary {
-    background-color: var(--primary-color) !important;
+    background: linear-gradient(135deg, var(--primary-color), #5a4df7);
     color: var(--white);
 }
 
 /* Kurangi Data Card */
 .card-header.bg-warning {
-    background-color: var(--accent-color) !important;
+    background: linear-gradient(135deg, var(--accent-color), #ffda77);
     color: var(--text-dark);
 }
 
@@ -59,18 +71,21 @@ body {
     font-weight: 600;
     margin-bottom: 6px;
     display: block;
+    color: var(--primary-color);
 }
 
 .form-control {
-    border-radius: 10px;
+    border-radius: 8px;
     border: 1px solid #ccc;
     padding: 0.5rem 0.75rem;
     transition: all 0.3s ease-in-out;
+    background-color: #fff;
+    box-shadow: none;
 }
 
 .form-control:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px rgba(59, 47, 201, 0.15);
+    box-shadow: 0 0 0 3px rgba(59, 47, 201, 0.2);
 }
 
 /* ======= BUTTONS ======= */
@@ -81,28 +96,27 @@ button,
     font-weight: 500;
     font-size: 14px;
     transition: all 0.2s ease-in-out;
+    border: none;
 }
 
 /* Tambah Button */
 .btn-success {
-    background-color: #28a745;
-    border: none;
+    background: linear-gradient(to right, #28a745, #218838);
     color: #fff;
 }
 
 .btn-success:hover {
-    background-color: #218838;
+    background: linear-gradient(to right, #218838, #1e7e34);
 }
 
 /* Kurangi Button */
 .btn-danger {
-    background-color: #dc3545;
-    border: none;
+    background: linear-gradient(to right, #dc3545, #c82333);
     color: #fff;
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    background: linear-gradient(to right, #c82333, #bd2130);
 }
 
 /* Dropdown / Select */
@@ -113,7 +127,17 @@ select.form-control {
     padding-right: 2rem;
 }
 
-/* Responsive Adjustments (optional) */
+/* ======= UTILITY ======= */
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+h5 {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ======= RESPONSIVE ======= */
 @media (max-width: 576px) {
     .card-header {
         font-size: 1rem;

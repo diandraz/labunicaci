@@ -83,11 +83,37 @@ button, .btn {
 /* === TEXT === */
 h1 {
     font-weight: 700;
-    color: #343a40;
+    color: #ec9717;
     margin-bottom: 20px;
 }
 
 /* === SPACING === */
 .mb-5 {
     margin-bottom: 3rem !important;
+}
+/* === FONT TAMBAHAN === */
+/* Gunakan Google Font: Poppins atau Inter jika tersedia di HTML <head> */
+body, table, .card, button, .btn {
+    font-family: 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+/* === WARNA KHUSUS UNTUK JUDUL "Pemberitahuan" === */
+/* Gaya tulisan heading yang mengandung kata "Pemberitahuan" */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Khusus untuk tulisan "Pemberitahuan" */
+h1:contains("Pemberitahuan"),
+h2:contains("Pemberitahuan"),
+h3:contains("Pemberitahuan") {
+    color: #ffc107; /* Kuning Bootstrap */
+}
+
+/* Alternatif jika selector :contains tidak berfungsi di CSS murni */
+.pemberitahuan {
+    color: #ffc107 !important;
+    font-weight: 700;
 }

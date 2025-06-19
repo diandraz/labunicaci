@@ -1,92 +1,89 @@
 :root {
-    --primary-color: #2b2dff;       /* Dominan biru */
-    --accent-color: #ffcb42;        /* Aksen kuning */
-    --bg-light: #e0e7ff;            /* Biru muda lembut */
-    --white: #ffffff;
-    --dark: #1a1a2e;
-    --text-muted: #9ca3af;
-    --bg-gradient: linear-gradient(to right, #2b2dff, #4b32c3);
+    --primary-color: #002B5B; /* Warna biru tua sesuai header */
+    --secondary-color: #F9F7F7;
+    --highlight-color: #FFD93D; /* Warna emas untuk ikon */
+    --info-box-bg: #003566;
+    --info-box-text: #FFFFFF;
+    --text-muted: #A5A5A5;
+    --bg-main: #F6F6F6;
+    --accent-color: #FF6B6B;
+    --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* === Body & Global Font === */
+/* === Global Reset === */
 body {
-    background: var(--bg-light);
+    background-color: var(--bg-main);
     font-family: 'Poppins', sans-serif;
-    color: var(--dark);
+    color: var(--primary-color);
+    margin: 0;
+    padding: 0;
 }
 
-/* === Header & Title === */
+/* === Header Text === */
 .dashboard-title {
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--primary-color);
-    font-size: 2.2rem;
+    margin-bottom: 0.25rem;
 }
 
 .welcome-text {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-muted);
+    margin-bottom: 1.5rem;
 }
 
 /* === Section Titles === */
 .section-title {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: var(--primary-color);
     margin: 2rem 0 1rem;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 0.5rem;
 }
 
-/* === Info Boxes === */
+/* === Info Box === */
 .info-box {
+    background: var(--info-box-bg);
+    color: var(--info-box-text);
     border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    color: #fff;
-    background: var(--primary-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    text-align: center;
-}
-
-.bg-info {
-    background: #4a6cf7 !important;
-}
-
-.bg-success {
-    background: #00b894 !important;
-}
-
-.bg-warning {
-    background: #fbc531 !important;
-    color: #222;
-}
-
-.bg-danger {
-    background: #e74c3c !important;
-}
-
-.bg-primary {
-    background: var(--primary-color) !important;
-}
-
-.info-box-content {
-    font-size: 1rem;
-}
-
-/* === Chart Containers === */
-.chart-container {
-    background: var(--white);
-    padding: 1rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-}
-
-/* === Alerts === */
-.alert {
-    border-radius: 10px;
     padding: 1rem 1.2rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: 500;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.info-box i,
+.info-box .icon {
+    color: var(--highlight-color);
+    font-size: 1.2rem;
+    margin-right: 6px;
+}
+
+/* === Card Container === */
+.chart-container,
+.card-container {
+    background: var(--secondary-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    transition: 0.3s ease;
+}
+
+/* === Alert === */
+.alert {
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-weight: 500;
+    box-shadow: var(--card-shadow);
 }
 
 .alert-warning {
@@ -101,34 +98,38 @@ body {
     color: #721c24;
 }
 
-/* === Buttons (like alert actions) === */
+/* === Button Warning === */
 .btn-warning {
-    background-color: var(--accent-color);
+    background-color: var(--highlight-color);
     border: none;
     color: #222;
-    font-weight: 500;
-    padding: 4px 12px;
+    font-weight: 600;
+    padding: 6px 16px;
     border-radius: 8px;
+    transition: 0.3s ease;
 }
 
 .btn-warning:hover {
-    background-color: #f0b429;
+    background-color: #f4c10f;
     color: #111;
 }
 
 /* === Utility === */
 .text-muted {
-    color: var(--text-muted) !important;
+    color: var(--text-muted);
 }
 
 h5 {
     font-weight: 600;
 }
 
-/* === Chemistry-inspired Decorations (optional custom classes) === */
-.chem-bg {
-    background-image: url('/img/chemistry-pattern.svg'); /* kamu bisa buat pattern chemistry SVG */
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+/* === Responsive Fixes (Optional) === */
+@media (max-width: 768px) {
+    .info-box {
+        font-size: 0.9rem;
+    }
+
+    .dashboard-title {
+        font-size: 1.8rem;
+    }
 }

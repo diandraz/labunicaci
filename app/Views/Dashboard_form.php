@@ -16,7 +16,7 @@
     
     <!-- Custom Dashboard CSS -->
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
-
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>

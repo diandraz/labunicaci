@@ -10,6 +10,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/manajemen.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
 </head>
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('css/profiles.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
 </head>
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 

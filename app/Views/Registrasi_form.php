@@ -11,8 +11,12 @@
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
     <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
+    <!-- Custom CSS eksternal -->
+    <link rel="stylesheet" href="<?= base_url('css/registrasi.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
 </head>
 <body class="hold-transition login-page">
+
 <div class="login-box">
     <div class="login-logo">
         <a href="#"><b>Registrasi</b> Akun</a>
@@ -133,5 +137,6 @@
         return true;
     }
 </script>
+
 </body>
 </html>

@@ -1,0 +1,62 @@
+/* style_reguler.css */
+
+/* Navigasi link */
+body > div > a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+}
+
+body > div > a:hover {
+    color: #007bff;
+}
+
+/* Teks notifikasi sukses */
+div[style*="color:green"] {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Tabel DataTables */
+table.display {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Gambar pengguna */
+table.display img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Judul */
+h2 {
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+/* Select dropdown */
+select {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+/* Tambahan gaya untuk kolom */
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+/* Responsive table */
+@media (max-width: 600px) {
+    table.display, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    th {
+        background-color: #f1f1f1;
+    }
+}

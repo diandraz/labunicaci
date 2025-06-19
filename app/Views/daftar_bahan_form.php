@@ -7,81 +7,8 @@
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
-
-    <!-- Tambahan Styling -->
-    <style>
-        body {
-            background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        h1.m-0.text-dark {
-            color: #2d3e50;
-            font-weight: bold;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            border-radius: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(to right, #3a7bd5, #00d2ff);
-            border: none;
-            border-radius: 8px;
-        }
-
-        .btn-secondary {
-            background-color: #f1f1f1;
-            color: #333;
-            border-radius: 8px;
-            border: none;
-        }
-
-        .alert-info {
-            border-radius: 8px;
-            background-color: #e7f3fe;
-            border-color: #b3d7ff;
-            color: #31708f;
-        }
-
-        .card {
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: none;
-        }
-
-        .table thead {
-            background-color: #3a7bd5;
-            color: #fff;
-        }
-
-        .table-bordered {
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .table td, .table th {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .pagination .page-link {
-            border-radius: 8px;
-            color: #3a7bd5;
-        }
-
-        .pagination .disabled .page-link {
-            color: #999;
-        }
-
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(to right, #3a7bd5, #00d2ff);
-            border: none;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/daftar-bahan.css') ?>">
 </head>
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">
@@ -100,6 +27,7 @@
         <div class="content">
             <div class="container">
 
+                <!-- Form Pencarian -->
                 <form method="GET" action="/inventory/daftar-bahan" class="mb-3">
                     <div class="form-row">
                         <div class="col-md-5 mb-2">
@@ -110,7 +38,9 @@
                                 <option value="">📍 Semua Lokasi</option>
                                 <?php if (!empty($locations)): ?>
                                     <?php foreach ($locations as $loc): ?>
-                                        <option value="<?= esc($loc) ?>" <?= ($location ?? '') == $loc ? 'selected' : '' ?>><?= esc($loc) ?></option>
+                                        <option value="<?= esc($loc) ?>" <?= ($location ?? '') == $loc ? 'selected' : '' ?>>
+                                            <?= esc($loc) ?>
+                                        </option>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </select>
@@ -122,6 +52,7 @@
                     </div>
                 </form>
 
+                <!-- Info Hasil Pencarian -->
                 <?php if (!empty($search) || !empty($location)): ?>
                     <div class="alert alert-info">
                         <strong>📊 Hasil Pencarian:</strong>
@@ -131,6 +62,7 @@
                     </div>
                 <?php endif; ?>
 
+                <!-- Tabel Data Bahan -->
                 <div class="card">
                     <div class="card-body table-responsive p-0">
                         <table class="table table-bordered table-hover text-nowrap">
@@ -185,6 +117,7 @@
                     </div>
                 </div>
 
+                <!-- Pagination -->
                 <?php if (($totalPages ?? 1) > 1): ?>
                     <div class="mt-3">
                         <?php 
@@ -200,7 +133,9 @@
                                         <a class="page-link" href="/inventory/daftar-bahan?page=<?= $currentPage - 1 ?><?= $queryString ?>">← Sebelumnya</a>
                                     </li>
                                 <?php endif; ?>
-                                <li class="page-item active"><span class="page-link">Halaman <?= $currentPage ?> dari <?= $totalPages ?></span></li>
+                                <li class="page-item active">
+                                    <span class="page-link">Halaman <?= $currentPage ?> dari <?= $totalPages ?></span>
+                                </li>
                                 <?php if ($currentPage < $totalPages): ?>
                                     <li class="page-item">
                                         <a class="page-link" href="/inventory/daftar-bahan?page=<?= $currentPage + 1 ?><?= $queryString ?>">Selanjutnya →</a>
@@ -216,6 +151,7 @@
     </div>
 </div>
 
+<!-- JavaScript Delete Function -->
 <?php if (session()->get('role') === 'admin'): ?>
 <script>
     function hapusBahan(id, nama) {
@@ -252,4 +188,4 @@
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/js/adminlte.min.js') ?>"></script>
 
 </body>
-</html>
+</html

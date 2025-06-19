@@ -6,7 +6,9 @@
 
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
-
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/manajemen_user.css') ?>">
+    
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
 <body class="hold-transition layout-navbar-fixed layout-top-nav">

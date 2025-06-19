@@ -4,6 +4,8 @@
     --light-bg: #f0f4ff;
     --white: #ffffff;
     --dark-text: #222;
+    --soft-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --card-radius: 12px;
 }
 
 /* === GLOBAL === */
@@ -11,35 +13,59 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--light-bg);
     color: var(--dark-text);
+    line-height: 1.6;
+    font-size: 15px;
 }
 
 .content-header h1 {
     font-weight: 700;
     color: var(--primary-color);
+    font-size: 2rem;
+    letter-spacing: -0.5px;
 }
 
 p.text-muted {
-    color: #555 !important;
+    color: #666 !important;
+    font-size: 14px;
+}
+
+/* === SECTION TITLE === */
+.section-title {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    border-left: 4px solid var(--accent-color);
+    padding-left: 0.75rem;
+    margin-top: 1.5rem;
 }
 
 /* === CARD === */
 .card {
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: var(--card-radius);
+    box-shadow: var(--soft-shadow);
     border: none;
+    background: var(--white);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .card.bg-primary {
-    background-color: var(--primary-color) !important;
+    background: linear-gradient(135deg, var(--primary-color), #5740e5) !important;
+    color: white;
 }
 
 .card.bg-warning {
-    background-color: var(--accent-color) !important;
+    background: linear-gradient(135deg, var(--accent-color), #ffd766) !important;
     color: #000;
 }
 
 .card.bg-success {
     background-color: #28a745 !important;
+    color: #fff;
 }
 
 /* === TABLE === */
@@ -51,6 +77,7 @@ p.text-muted {
 
 .table td {
     vertical-align: middle;
+    font-size: 14px;
 }
 
 /* === BADGES === */
@@ -65,8 +92,13 @@ p.text-muted {
 
 /* === BUTTONS === */
 .btn-primary {
-    background-color: var(--primary-color);
+    background: linear-gradient(to right, var(--primary-color), #5740e5);
+    color: #fff;
     border: none;
+}
+
+.btn-primary:hover {
+    background: #2a22b5;
 }
 
 .btn-warning {
@@ -75,34 +107,65 @@ p.text-muted {
     border: none;
 }
 
-.btn-success, .btn-danger, .btn-secondary {
-    border: none;
+.btn-warning:hover {
+    background-color: #f1b436;
 }
 
-.btn-info {
-    background-color: #17a2b8;
+.btn-success, .btn-danger, .btn-secondary, .btn-info {
+    border: none;
+    color: white;
 }
+
+.btn-success { background-color: #28a745; }
+.btn-danger  { background-color: #dc3545; }
+.btn-secondary { background-color: #6c757d; }
+.btn-info { background-color: #17a2b8; }
 
 /* === MODAL === */
 .modal-header.bg-info {
     background-color: var(--primary-color);
+    color: white;
 }
 
 .modal-header.bg-success {
     background-color: #28a745;
+    color: white;
 }
 
-/* === FILTER BOX === */
+/* === FILTER BOX / CARD HEADER ICON === */
 .card-header h5 i {
     color: var(--accent-color);
-}
-
-.section-title {
-    font-weight: 600;
-    color: var(--primary-color);
+    margin-right: 6px;
 }
 
 /* === ICON STYLING === */
-.fas.fa-user, .fas.fa-crown, .fas.fa-key {
+.fas.fa-user,
+.fas.fa-crown,
+.fas.fa-key {
     color: var(--accent-color);
+    margin-right: 6px;
+    font-size: 1rem;
+}
+
+/* === UTILITY === */
+h5 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 576px) {
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.1rem;
+    }
+
+    .table th,
+    .table td {
+        font-size: 13px;
+    }
 }
