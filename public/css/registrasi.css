@@ -1,109 +1,650 @@
-/* ======= Halaman Registrasi (Versi Harmonis) ======= */
+/* ===== LABUNICA REGISTRASI - LUXURY DESIGN (KONSISTEN DENGAN LOGIN) ===== */
 
-/* Box Utama Registrasi */
+/* === IMPORT FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* === ROOT VARIABLES === */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* === RESET & BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* === LUXURY BODY DESIGN - DENGAN SCROLL SUPPORT === */
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 40px 0 40px 0 !important;
+}
+
+/* === ELEGANT ANIMATED BACKGROUND - SAMA DENGAN LOGIN === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(45deg, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        linear-gradient(-45deg, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.08) 0%, transparent 30%);
+    animation: subtleMove 30s ease-in-out infinite alternate;
+    z-index: -2;
+}
+
+/* === SUBTLE GRAIN TEXTURE - SAMA DENGAN LOGIN === */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0);
+    background-size: 20px 20px;
+    animation: grainMove 60s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes subtleMove {
+    0% { 
+        opacity: 0.3;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    50% { 
+        opacity: 0.5;
+        transform: translateX(10px) translateY(-5px) scale(1.02);
+    }
+    100% { 
+        opacity: 0.4;
+        transform: translateX(-5px) translateY(3px) scale(0.98);
+    }
+}
+
+@keyframes grainMove {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(-10px, 5px); }
+    30% { transform: translate(5px, -10px); }
+    40% { transform: translate(-5px, 15px); }
+    50% { transform: translate(-15px, 5px); }
+    60% { transform: translate(15px, -5px); }
+    70% { transform: translate(5px, 15px); }
+    80% { transform: translate(-10px, -10px); }
+    90% { transform: translate(10px, 5px); }
+    100% { transform: translate(5px, -5px); }
+}
+
+/* === LUXURY LOGIN BOX - SAMA DENGAN LOGIN === */
 .login-box {
-  width: 420px;
-  margin: 5% auto;
-  background: linear-gradient(to bottom right, #e6ecf7, #f0f4fc);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 420px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 40px;
 }
 
-/* Logo Teks */
+/* === PREMIUM LOGO - SAMA DENGAN LOGIN === */
+.login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+    animation: slideDown 1s ease-out;
+}
+
 .login-logo a {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #273c75;
-  text-decoration: none;
-  letter-spacing: 1px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 800;
+    text-decoration: none;
+    letter-spacing: -1px;
+    display: inline-block;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
-/* Kartu Registrasi */
+.login-logo a:hover {
+    transform: scale(1.05);
+    background: var(--secondary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-logo a::before {
+    content: '🔬';
+    position: absolute;
+    top: -5px;
+    left: -35px;
+    font-size: 28px;
+    animation: bounce 2s infinite;
+}
+
+.login-logo a::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--secondary-gradient);
+    border-radius: 3px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.login-logo a:hover::after {
+    transform: scaleX(1);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* === LUXURY CARD CONTAINER - SAMA DENGAN LOGIN === */
 .card {
-  border-radius: 12px;
-  background-color: #ffffff;
-  border: none;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border: none;
+    border-radius: 24px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        var(--shadow-large),
+        0 0 0 1px var(--glass-border),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: slideUp 1s ease-out 0.3s both;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Pesan di Atas Form */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: var(--secondary-gradient);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* === PREMIUM CARD BODY - SAMA DENGAN LOGIN === */
+.login-card-body {
+    padding: 40px 35px;
+    border-radius: 24px;
+    position: relative;
+}
+
+/* === ELEGANT MESSAGE - SAMA DENGAN LOGIN === */
 .login-box-msg {
-  font-size: 1.05rem;
-  margin-bottom: 20px;
-  font-weight: 500;
-  color: #2f3640;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
 }
 
-/* Alert Notifikasi */
+.login-box-msg::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-gradient);
+    border-radius: 3px;
+}
+
+/* === PREMIUM INPUT GROUPS - SAMA DENGAN LOGIN === */
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* === LUXURY FORM CONTROLS - SAMA DENGAN LOGIN === */
+.form-control {
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-radius: 16px;
+    padding: 16px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 0 0 4px rgba(102, 126, 234, 0.1),
+        0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+/* === SELECT STYLING - SAMA DENGAN LOGIN + ENHANCEMENT === */
+select.form-control {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'><path fill='%23667eea' d='M7 10L0 3h14z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 14px;
+    padding-right: 50px;
+}
+
+/* === ELEGANT INPUT GROUP APPEND - SAMA DENGAN LOGIN === */
+.input-group-append .input-group-text {
+    border: 2px solid rgba(102, 126, 234, 0.1);
+    border-left: none;
+    border-radius: 0 16px 16px 0;
+    background: var(--primary-gradient);
+    color: white;
+    padding: 16px 20px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.input-group-text span {
+    font-size: 16px;
+}
+
+/* === LUXURY BUTTON STYLES - SAMA DENGAN LOGIN === */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 16px;
+    padding: 25px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        0 4px 15px rgba(102, 126, 234, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: var(--secondary-gradient);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 8px 25px rgba(102, 126, 234, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.btn-primary:active {
+    transform: translateY(-1px) scale(1.01);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+/* === PREMIUM ALERT STYLES - SAMA DENGAN LOGIN === */
 .alert {
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
-  border: none;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-weight: 500;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+    position: relative;
+    animation: alertSlide 0.5s ease-out;
 }
 
 .alert-success {
-  background-color: #d0f0e9;
-  color: #155d52;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    color: #16a34a;
 }
 
 .alert-danger {
-  background-color: #ffe3e3;
-  color: #c0392b;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+    animation: shake 0.6s ease-in-out;
 }
 
-/* Input Text dan Email */
-.input-group .form-control {
-  border-radius: 8px;
-  padding: 10px;
-  border: 1px solid #cbd6e2;
-  transition: all 0.3s ease;
+@keyframes alertSlide {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
-.input-group-text {
-  background-color: #f0f4ff;
-  border: 1px solid #cbd6e2;
-  border-left: none;
-  border-radius: 0 8px 8px 0;
-  color: #3a7bd5;
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
 }
 
-/* Efek Fokus */
-.form-control:focus {
-  border-color: #3a7bd5;
-  box-shadow: 0 0 0 0.15rem rgba(58, 123, 213, 0.2);
-}
-
-/* Ukuran Tulisan Kecil */
-.mb-2, .mb-3 {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* Tombol Daftar */
-.btn-block {
-  border-radius: 8px;
-  background: linear-gradient(to right, #3a7bd5, #00c6ff);
-  border: none;
-  font-weight: 600;
-  color: #fff;
-  transition: 0.3s ease;
-}
-
-.btn-block:hover {
-  background: linear-gradient(to right, #2c6db2, #00b2e4);
-}
-
-/* Link ke Login */
+/* === ELEGANT LINK STYLES - SAMA DENGAN LOGIN === */
 a {
-  text-decoration: none;
-  color: #3a7bd5;
-  font-weight: 500;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 a:hover {
-  text-decoration: underline;
-  color: #2b5da9;
+    color: #667eea;
+    text-decoration: none;
+    transform: translateX(3px);
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: var(--primary-gradient);
+    transition: width 0.3s ease;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+/* === CHECKBOX STYLING === */
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    transform: translateY(2px);
+}
+
+/* === SMALL TEXT STYLING === */
+small {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* === PASSWORD STRENGTH INDICATOR === */
+.password-strength {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-weak { background: #ef4444; width: 25%; }
+.strength-fair { background: #f59e0b; width: 50%; }
+.strength-good { background: #10b981; width: 75%; }
+.strength-strong { background: #059669; width: 100%; }
+
+/* === ROW ADJUSTMENTS - SAMA DENGAN LOGIN === */
+.row {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.row .col-8 {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+}
+
+.row .col-4 {
+    display: flex;
+    align-items: center;
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+/* === MODERN SCROLLBAR - ENHANCED === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-gradient);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-gradient);
+}
+
+/* === RESPONSIVE DESIGN - SAMA DENGAN LOGIN === */
+@media (max-width: 576px) {
+    body {
+        padding: 20px 0 30px 0;
+    }
+    
+    .login-box {
+        margin: 0 15px;
+        max-width: none;
+    }
+    
+    .login-logo a {
+        font-size: 28px;
+    }
+    
+    .login-card-body {
+        padding: 30px 25px;
+    }
+    
+    .form-control {
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+    
+    .input-group-text {
+        padding: 14px 18px;
+    }
+    
+    .btn-primary {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+    
+    .row .col-8,
+    .row .col-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .row .col-8 {
+        padding: 0 0 10px 0;
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        padding: 15px 0 25px 0;
+    }
+    
+    .login-box {
+        margin: 0 10px;
+    }
+    
+    .login-card-body {
+        padding: 25px 20px;
+    }
+    
+    .login-logo a {
+        font-size: 24px;
+    }
+}
+
+/* === LOADING STATES - SAMA DENGAN LOGIN === */
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === ACCESSIBILITY === */
+.form-control:focus,
+.btn:focus {
+    outline: none;
+}
+
+/* === SMOOTH TRANSITIONS === */
+* {
+    transition: all 0.3s ease;
+}
+
+/* === GLASS MORPHISM ENHANCEMENTS === */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+/* === ADDITIONAL UTILITIES === */
+.mb-2 {
+    margin-bottom: 15px;
+}
+
+.mb-3 {
+    margin-bottom: 20px;
+}
+
+.mt-4 {
+    margin-top: 25px;
+}
+
+.d-flex.align-items-center {
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* === SCROLL ENHANCEMENTS === */
+html {
+    scroll-behavior: smooth;
+}
+
+.login-page {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: auto;
+    min-height: 100vh;
+}
+
+body.hold-transition {
+    overflow-y: auto;
+    overflow-x: hidden;
 }

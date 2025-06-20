@@ -1,15 +1,16 @@
-/* ===== global.css (Enhanced) ===== */
+/* ===== global.css (Enhanced - No Background Image) ===== */
 
-/* Background untuk seluruh halaman */
+/* REMOVE BACKGROUND IMAGE COMPLETELY */
 body {
-    background-image: url('../adminlte/AdminLTE-3.2.0/dist/img/bg.jpg'); 
+    /* background-image: url('../adminlte/AdminLTE-3.2.0/dist/img/bg.jpg');  -- HAPUS INI -- */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     background-attachment: fixed;
     min-height: 100vh;
-    font-family: 'Source Sans Pro', sans-serif;
-    color: #fff; 
+    font-family: 'Inter', sans-serif;
+    color: #2d3748; 
 }
 
 /* Transparansi wrapper (AdminLTE) */
@@ -19,23 +20,26 @@ body {
 
 /* Kartu dengan tampilan modern */
 .card {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     color: #212529;
-    backdrop-filter: blur(4px);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Padding konten */
 .content {
     padding: 20px;
 }
+
 /* ======= CUSTOM HEADER ======= */
 /* Header utama dengan warna biru tua */
 .main-header {
-    background-color: #001f3f !important; /* Biru tua */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     color: #fff !important;
-    border-bottom: 2px solid #001737;
+    border-bottom: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 /* Judul/logo/navbar tetap terlihat jelas */
@@ -43,91 +47,107 @@ body {
 .main-header .logo,
 .main-header .navbar-nav > li > a {
     color: #fff !important;
-    font-weight: bold;
+    font-weight: 600;
+    transition: all 0.3s ease;
 }
 
 /* Efek hover navbar item */
 .main-header .navbar-nav > li > a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    transform: translateY(-1px);
 }
-
 
 /* Footer elegan */
 .main-footer {
-    background-color: rgba(0, 0, 0, 0.7) !important;
-    color: #ccc;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #64748b;
     font-size: 14px;
     text-align: center;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Tombol berwarna (gunakan kelas Bootstrap) */
 .btn-custom {
-    background-color: #28a745;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: #fff;
-    font-weight: bold;
-    border-radius: 6px;
-    transition: 0.3s ease-in-out;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: none;
 }
 
 .btn-custom:hover {
-    background-color: #218838;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
 }
 
 /* Heading lebih menarik */
 h1, h2, h3 {
-    color: #ffffff;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    color: #2d3748;
+    text-shadow: none;
+    font-weight: 700;
 }
 
 /* Link warna mencolok */
 a {
-    color: #17a2b8;
+    color: #667eea;
+    transition: all 0.3s ease;
 }
 
 a:hover {
-    color: #138496;
-    text-decoration: underline;
+    color: #5a67d8;
+    text-decoration: none;
+    transform: translateX(2px);
 }
-/* ====== DASHBOARD RATA KANAN ====== */
 
+/* ====== DASHBOARD RATA KANAN ====== */
 /* Geser konten utama ke kanan */
 .content-wrapper {
-    margin-left: 200px; /* Atur sesuai lebar area logo */
+    margin-left: 0;
     padding-left: 20px;
 }
 
-/* Logo area kiri */
+/* Logo area kiri - REMOVE IF NOT NEEDED */
 .logo-area {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 180px; /* Sesuaikan dengan margin-left di atas */
-    height: 100vh;
-    background-color: rgba(255, 255, 255, 0.1); /* transparan / bisa diubah */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+    display: none; /* Hide logo area to remove background image dependency */
 }
 
-/* Logo di dalam area */
-.logo-area img {
-    max-width: 80%;
-    height: auto;
-}
 /* Warna ikon monoline kuning */
 .icon-yellow {
-    color: #ffc107 !important; /* warna kuning cerah */
+    color: #fbbf24 !important;
     margin-right: 4px;
     font-weight: 500;
 }
+
 .dashboard-lab-title {
-    color: var(--primary-color); /* Bukan --accent-color */
+    color: #2d3748;
     text-shadow: none;
 }
+
 /* Supaya teks judul card lebih gelap dan terbaca */
 .chart-container h5,
 .chart-container .section-title {
-    color: #222 !important; /* Hitam gelap */
+    color: #2d3748 !important;
+}
+
+/* Modern card enhancements */
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth transitions for all elements */
+* {
+    transition: all 0.3s ease;
+}
+
+/* Remove any remaining background images */
+.wrapper::before,
+.wrapper::after,
+.content-wrapper::before,
+.content-wrapper::after {
+    display: none !important;
 }

@@ -1,30 +1,724 @@
-/* === Utility === */
-.hidden {
-    display: none;
-}
-ul {
-    padding-left: 20px;
-}
-li {
-    margin-bottom: 5px;
+/* ===== LABUNICA PEMAKAIAN - LUXURY DESIGN (KONSISTEN DENGAN LOGIN/REGISTRASI) ===== */
+
+/* === IMPORT FONTS === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* === ROOT VARIABLES - SAMA DENGAN LOGIN/REGISTRASI === */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #2d3748;
+    --text-secondary: #718096;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --border-radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* === Review List === */
-#tabelReview ul {
-    list-style: disc;
-    margin-top: 10px;
+/* === RESET & BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#tabelReview li {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    padding: 8px 12px;
-    margin-bottom: 8px;
+/* === BODY - SAMA DENGAN LOGIN/REGISTRASI === */
+body {
+    font-family: 'Poppins', sans-serif !important;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    min-height: 100vh !important;
+    color: var(--text-primary) !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-/* === Buttons === */
+/* === BACKGROUND PATTERN - SAMA DENGAN LOGIN/REGISTRASI === */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(45deg, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        linear-gradient(-45deg, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 70% 80%, rgba(118, 75, 162, 0.08) 0%, transparent 30%);
+    animation: subtleMove 30s ease-in-out infinite alternate;
+    z-index: -2;
+}
+
+/* === GRAIN TEXTURE - SAMA DENGAN LOGIN/REGISTRASI === */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.8) 1px, transparent 0);
+    background-size: 20px 20px;
+    animation: grainMove 60s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes subtleMove {
+    0% { 
+        opacity: 0.3;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+    50% { 
+        opacity: 0.5;
+        transform: translateX(10px) translateY(-5px) scale(1.02);
+    }
+    100% { 
+        opacity: 0.4;
+        transform: translateX(-5px) translateY(3px) scale(0.98);
+    }
+}
+
+@keyframes grainMove {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(-10px, 5px); }
+    30% { transform: translate(5px, -10px); }
+    40% { transform: translate(-5px, 15px); }
+    50% { transform: translate(-15px, 5px); }
+    60% { transform: translate(15px, -5px); }
+    70% { transform: translate(5px, 15px); }
+    80% { transform: translate(-10px, -10px); }
+    90% { transform: translate(10px, 5px); }
+    100% { transform: translate(5px, -5px); }
+}
+
+/* === WRAPPER AND LAYOUT FIXES === */
+.wrapper {
+    min-height: 100vh !important;
+    background: transparent !important;
+}
+
+.content-wrapper {
+    background: transparent !important;
+    margin-left: 0 !important;
+    padding: 0 !important;
+    margin-top: 60px !important;
+}
+
+.main-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    background: var(--primary-gradient) !important;
+    border-bottom: none !important;
+    box-shadow: var(--shadow-medium) !important;
+}
+
+/* === CONTENT HEADER - SAMA DENGAN LOGIN/REGISTRASI === */
+.content-header {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(20px) !important;
+    border-radius: 0 0 var(--border-radius) var(--border-radius) !important;
+    box-shadow: var(--shadow-soft) !important;
+    margin: 20px 15px 30px 15px !important;
+    padding: 30px !important;
+    border: 1px solid var(--glass-border) !important;
+    animation: slideDown 0.8s ease-out !important;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.content-header h1 {
+    background: var(--primary-gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 800 !important;
+    font-size: 2.5rem !important;
+    letter-spacing: -0.5px !important;
+    margin: 0 !important;
+    text-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.content-header p {
+    color: var(--text-secondary) !important;
+    font-size: 1.1rem !important;
+    margin: 10px 0 0 0 !important;
+    font-weight: 500 !important;
+}
+
+/* === CONTAINER === */
+.container,
+.container-fluid {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 20px !important;
+    margin: 0 !important;
+}
+
+/* === CARD DESIGN - SAMA DENGAN LOGIN/REGISTRASI === */
+.card {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow-medium) !important;
+    transition: var(--transition) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin: 0 15px 30px 15px !important;
+    animation: slideUp 0.6s ease-out !important;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: var(--secondary-gradient);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: var(--shadow-large) !important;
+}
+
+/* === CARD HEADER === */
+.card-header {
+    background: rgba(102, 126, 234, 0.05) !important;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.1) !important;
+    padding: 25px 30px !important;
+    border-radius: var(--border-radius) var(--border-radius) 0 0 !important;
+}
+
+.card-body {
+    padding: 30px !important;
+}
+
+.card-header h5 {
+    margin: 0 !important;
+    font-weight: 700 !important;
+    font-size: 1.25rem !important;
+    color: var(--text-primary) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+/* === FORM STYLING - SAMA DENGAN LOGIN/REGISTRASI === */
+.form-group {
+    margin-bottom: 25px !important;
+}
+
+.form-group label {
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 8px !important;
+    display: block !important;
+    font-size: 0.95rem !important;
+}
+
+/* === FORM CONTROLS - SAMA DENGAN LOGIN/REGISTRASI === */
+.form-control {
+    border: 2px solid rgba(102, 126, 234, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: var(--text-primary) !important;
+    transition: var(--transition) !important;
+    backdrop-filter: blur(10px) !important;
+    width: 100% !important;
+}
+
+.form-control:focus {
+    border-color: #667eea !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 
+        0 0 0 4px rgba(102, 126, 234, 0.1),
+        0 4px 12px rgba(102, 126, 234, 0.15) !important;
+    transform: translateY(-2px) !important;
+    outline: none !important;
+}
+
+.form-control:disabled {
+    background: rgba(248, 250, 252, 0.8) !important;
+    border-color: rgba(203, 213, 225, 0.5) !important;
+    color: var(--text-secondary) !important;
+    cursor: not-allowed !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary) !important;
+    font-weight: 400 !important;
+}
+
+/* === SELECT DROPDOWN - SAMA DENGAN LOGIN/REGISTRASI === */
+select.form-control {
+    cursor: pointer !important;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'><path fill='%23667eea' d='M7 10L0 3h14z'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 20px center !important;
+    background-size: 14px !important;
+    padding-right: 50px !important;
+}
+
+select.form-control:disabled {
+    cursor: not-allowed !important;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'><path fill='%23cbd5e0' d='M7 10L0 3h14z'/></svg>") !important;
+}
+
+/* === BUTTON STYLING - SAMA DENGAN LOGIN/REGISTRASI === */
+.btn {
+    border-radius: 12px !important;
+    padding: 14px 28px !important;
+    font-weight: 600 !important;
+    font-size: 15px !important;
+    transition: var(--transition) !important;
+    border: none !important;
+    cursor: pointer !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.btn-primary {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: var(--secondary-gradient) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.btn-primary:disabled {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.btn-success {
+    background: var(--success-gradient) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4) !important;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    box-shadow: 0 8px 25px rgba(79, 172, 254, 0.5) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4) !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+    background: linear-gradient(135deg, #ee5a24 0%, #ff6b6b 100%) !important;
+    transform: translateY(-3px) scale(1.02) !important;
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.btn-lg {
+    padding: 16px 32px !important;
+    font-size: 16px !important;
+    border-radius: 14px !important;
+}
+
 .btn-sm {
-    padding: 3px 8px;
-    font-size: 12px;
+    padding: 10px 20px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+}
+
+/* === BUTTON SHINE EFFECT - SAMA DENGAN LOGIN/REGISTRASI === */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* === SMALL TEXT STYLING === */
+small {
+    display: block !important;
+    margin-top: 5px !important;
+    font-weight: 500 !important;
+    color: var(--text-secondary) !important;
+}
+
+#stokTersedia {
+    font-weight: 700 !important;
+    color: #667eea !important;
+}
+
+.text-muted {
+    color: var(--text-secondary) !important;
+    font-size: 0.875rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-top: 5px !important;
+}
+
+.fa-spinner {
+    animation: spin 1s linear infinite !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === TABLE STYLING - SAMA DENGAN LOGIN/REGISTRASI === */
+.table-responsive {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: var(--shadow-soft) !important;
+    margin: 0 !important;
+}
+
+.table {
+    margin-bottom: 0 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(10px) !important;
+    width: 100% !important;
+}
+
+.table thead th {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.5px !important;
+    padding: 16px 12px !important;
+    border: none !important;
+}
+
+.table tbody tr {
+    transition: var(--transition) !important;
+}
+
+.table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.05) !important;
+    transform: scale(1.01) !important;
+}
+
+.table tbody td {
+    padding: 16px 12px !important;
+    vertical-align: middle !important;
+    border-color: rgba(102, 126, 234, 0.1) !important;
+    font-weight: 500 !important;
+}
+
+/* === BADGE STYLING === */
+.badge {
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+}
+
+.badge-primary {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+}
+
+/* === ALERT STYLING - SAMA DENGAN LOGIN/REGISTRASI === */
+.alert {
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    font-weight: 500 !important;
+    margin: 15px 15px 25px 15px !important;
+    backdrop-filter: blur(10px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    animation: alertSlide 0.5s ease-out !important;
+}
+
+.alert-success {
+    background: rgba(34, 197, 94, 0.1) !important;
+    color: #16a34a !important;
+    border-left: 4px solid #16a34a !important;
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #dc2626 !important;
+    border-left: 4px solid #dc2626 !important;
+    animation: shake 0.6s ease-in-out !important;
+}
+
+@keyframes alertSlide {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.alert-dismissible .close {
+    position: absolute !important;
+    top: 16px !important;
+    right: 20px !important;
+    color: inherit !important;
+    opacity: 0.6 !important;
+    transition: var(--transition) !important;
+    background: none !important;
+    border: none !important;
+    font-size: 1.2rem !important;
+}
+
+.alert-dismissible .close:hover {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+}
+
+.alert i {
+    margin-right: 8px !important;
+}
+
+/* === ROW AND COLUMN FIXES === */
+.row {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+.row > [class*="col-"] {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+/* === EMPTY STATE STYLING === */
+.text-center {
+    text-align: center !important;
+}
+
+.py-4 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+}
+
+.fa-3x {
+    font-size: 3rem !important;
+    opacity: 0.3 !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* === CONTENT SPACING === */
+.content {
+    padding: 20px 0 !important;
+    min-height: calc(100vh - 120px) !important;
+}
+
+/* === LOADING STATE === */
+.loading {
+    opacity: 0.6 !important;
+    pointer-events: none !important;
+    position: relative !important;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-top-color: #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+    .content-header {
+        margin: 15px 10px 20px 10px !important;
+        padding: 20px !important;
+    }
+    
+    .content-header h1 {
+        font-size: 2rem !important;
+    }
+    
+    .card {
+        margin: 0 10px 20px 10px !important;
+    }
+    
+    .card-header,
+    .card-body {
+        padding: 20px !important;
+    }
+    
+    .btn {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        justify-content: center !important;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem !important;
+    }
+    
+    .form-control {
+        padding: 14px 18px !important;
+        font-size: 14px !important;
+    }
+    
+    .row > [class*="col-"] {
+        margin-bottom: 15px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .content-header h1 {
+        font-size: 1.75rem !important;
+    }
+    
+    .card-header h5 {
+        font-size: 1.1rem !important;
+    }
+    
+    .btn-lg {
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+    }
+    
+    .container {
+        padding: 0 15px !important;
+    }
+}
+
+/* === MODERN SCROLLBAR === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-gradient);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-gradient);
+}
+
+/* === ACCESSIBILITY === */
+.btn:focus,
+.form-control:focus {
+    outline: none !important;
+}
+
+/* === ANIMATION CLASSES === */
+.card:nth-child(2) {
+    animation-delay: 0.1s !important;
+}
+
+.card:nth-child(3) {
+    animation-delay: 0.2s !important;
+}
+
+/* === NAVBAR ENHANCEMENTS === */
+.navbar-nav .nav-link {
+    color: white !important;
+    font-weight: 500 !important;
+    transition: var(--transition) !important;
+}
+
+.navbar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 6px !important;
+    color: white !important;
+}
+
+/* === FINAL LAYOUT FIXES === */
+html {
+    scroll-behavior: smooth !important;
+}
+
+.login-page {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+body.hold-transition {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* === HIDDEN UTILITY === */
+.hidden {
+    display: none !important;
 }

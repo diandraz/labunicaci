@@ -32,7 +32,7 @@
 
                 <!-- FORM PENCARIAN -->
                 <form method="GET" action="/inventory/daftar-instrumen" class="form-inline mb-3">
-                    <input type="text" name="search" class="form-control mr-2" placeholder="🔍 Cari nama alat..." value="<?= esc($search ?? '') ?>">
+                    <input type="text" name="search" class="form-control mr-2" placeholder="🔍 Cari nama instrumen..." value="<?= esc($search ?? '') ?>">
                     <select name="location" class="form-control mr-2">
                         <option value="">📍 Semua Lokasi</option>
                         <?php if (!empty($locations)): ?>
@@ -44,7 +44,7 @@
                         <?php endif; ?>
                     </select>
                     <button type="submit" class="btn btn-primary mr-2">🔍 Cari</button>
-                    <a href="/inventory/daftar-alat" class="btn btn-secondary">🗑️ Reset</a>
+                    <a href="/inventory/daftar-instrumen" class="btn btn-secondary">🗑️ Reset</a>
                 </form>
 
                 <!-- INFO HASIL PENCARIAN -->
@@ -57,7 +57,7 @@
                         <?php if (!empty($location)): ?>
                             Lokasi: "<em><?= esc($location) ?></em>"
                         <?php endif; ?>
-                        - Ditemukan <strong><?= $totalItems ?? 0 ?></strong> alat
+                        - Ditemukan <strong><?= $totalItems ?? 0 ?></strong> instrumen
                     </div>
                 <?php endif; ?>
 
@@ -91,7 +91,7 @@
                                             <td><?= esc($item['lokasi']) ?></td>
                                             <?php if (session()->get('role') === 'admin'): ?>
                                                 <td>
-                                                    <button onclick="hapusAlat(<?= $item['id_instrumen'] ?>, '<?= esc($item['nama_instrumen']) ?>')" class="btn btn-danger btn-sm">
+                                                    <button onclick="hapusInstrumen(<?= $item['id_instrumen'] ?>, '<?= esc($item['nama_instrumen']) ?>')" class="btn btn-danger btn-sm">
                                                         🗑️ Hapus
                                                     </button>
                                                 </td>
@@ -103,9 +103,9 @@
                                         <td colspan="<?= session()->get('role') === 'admin' ? '5' : '4' ?>">
                                             <div class="text-center text-muted">
                                                 <?php if (!empty($search) || !empty($location)): ?>
-                                                    🔍 Tidak ada alat yang sesuai dengan pencarian
+                                                    🔍 Tidak ada instrumen yang sesuai dengan pencarian
                                                 <?php else: ?>
-                                                    📦 Tidak ada data alat
+                                                    📦 Tidak ada data instrumen
                                                 <?php endif; ?>
                                             </div>
                                         </td>
@@ -130,7 +130,7 @@
                             <ul class="pagination">
                                 <?php if ($currentPage > 1): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="/inventory/daftar-alat?page=<?= $currentPage - 1 ?><?= $queryString ?>">← Sebelumnya</a>
+                                        <a class="page-link" href="/inventory/daftar-instrumen?page=<?= $currentPage - 1 ?><?= $queryString ?>">← Sebelumnya</a>
                                     </li>
                                 <?php endif; ?>
 
@@ -140,7 +140,7 @@
 
                                 <?php if ($currentPage < $totalPages): ?>
                                     <li class="page-item">
-                                        <a class="page-link" href="/inventory/daftar-alat?page=<?= $currentPage + 1 ?><?= $queryString ?>">Selanjutnya →</a>
+                                        <a class="page-link" href="/inventory/daftar-instrumen?page=<?= $currentPage + 1 ?><?= $queryString ?>">Selanjutnya →</a>
                                     </li>
                                 <?php endif; ?>
                             </ul>
@@ -158,12 +158,12 @@
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/js/adminlte.min.js') ?>"></script>
 
-<!-- JS Hapus Alat -->
+<!-- JS Hapus Instrumen -->
 <?php if (session()->get('role') === 'admin'): ?>
 <script>
-    function hapusAlat(id, nama) {
-        if (confirm(`⚠️ Yakin ingin menghapus alat "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan!`)) {
-            fetch(`/inventory/hapus-alat/${id}`, {
+    function hapusInstrumen(id, nama) {
+        if (confirm(`⚠️ Yakin ingin menghapus instrumen "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan!`)) {
+            fetch(`/inventory/hapus-instrumen/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -174,7 +174,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('✅ Alat berhasil dihapus!');
+                    alert('✅ Instrumen berhasil dihapus!');
                     location.reload();
                 } else {
                     alert('❌ Error: ' + data.message);
