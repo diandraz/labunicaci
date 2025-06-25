@@ -7,8 +7,10 @@
     <!-- AdminLTE CSS -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
+    
+    <!-- PERBAIKAN: Gunakan CSS yang sama -->
     <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/daftar-bahan.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/inventory.css') ?>">
 </head>
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">
@@ -28,29 +30,33 @@
             <div class="container">
 
                 <!-- Form Pencarian -->
-                <form method="GET" action="/inventory/daftar-bahan" class="mb-3">
-                    <div class="form-row">
-                        <div class="col-md-5 mb-2">
-                            <input type="text" name="search" class="form-control" placeholder="🔍 Cari nama bahan..." value="<?= esc($search ?? '') ?>">
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <select name="location" class="form-control">
-                                <option value="">📍 Semua Lokasi</option>
-                                <?php if (!empty($locations)): ?>
-                                    <?php foreach ($locations as $loc): ?>
-                                        <option value="<?= esc($loc) ?>" <?= ($location ?? '') == $loc ? 'selected' : '' ?>>
-                                            <?= esc($loc) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-2">
-                            <button type="submit" class="btn btn-primary">🔍 Cari</button>
-                            <a href="/inventory/daftar-bahan" class="btn btn-secondary">🗑️ Reset</a>
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <form method="GET" action="/inventory/daftar-bahan">
+                            <div class="form-row">
+                                <div class="col-md-5 mb-2">
+                                    <input type="text" name="search" class="form-control" placeholder="🔍 Cari nama bahan..." value="<?= esc($search ?? '') ?>">
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <select name="location" class="form-control">
+                                        <option value="">📍 Semua Lokasi</option>
+                                        <?php if (!empty($locations)): ?>
+                                            <?php foreach ($locations as $loc): ?>
+                                                <option value="<?= esc($loc['lokasi']) ?>" <?= ($location ?? '') == $loc['lokasi'] ? 'selected' : '' ?>>
+                                                    <?= esc($loc['lokasi']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-2">
+                                    <button type="submit" class="btn btn-primary">🔍 Cari</button>
+                                    <a href="/inventory/daftar-bahan" class="btn btn-secondary">🗑️ Reset</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
 
                 <!-- Info Hasil Pencarian -->
                 <?php if (!empty($search) || !empty($location)): ?>
@@ -58,62 +64,69 @@
                         <strong>📊 Hasil Pencarian:</strong>
                         <?php if (!empty($search)): ?>Nama: "<em><?= esc($search) ?></em>"<?php endif; ?>
                         <?php if (!empty($location)): ?> Lokasi: "<em><?= esc($location) ?></em>"<?php endif; ?>
-                        - Ditemukan <strong><?= $totalItems ?? 0 ?></strong> bahan
+                        - Ditemukan <strong><?= $total ?? 0 ?></strong> bahan
                     </div>
                 <?php endif; ?>
 
                 <!-- Tabel Data Bahan -->
                 <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-bordered table-hover text-nowrap">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nama Bahan</th>
-                                    <th>Jumlah</th>
-                                    <th>Satuan</th>
-                                    <th>Lokasi</th>
-                                    <?php if (session()->get('role') === 'admin'): ?>
-                                        <th>🔧 Aksi</th>
-                                    <?php endif; ?>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (!empty($items)): ?>
-                                    <?php foreach ($items as $item): ?>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Bahan</th>
+                                        <th>Jumlah</th>
+                                        <th>Satuan</th>
+                                        <th>Lokasi</th>
+                                        <?php if (session()->get('role') === 'admin'): ?>
+                                            <th>🔧 Aksi</th>
+                                        <?php endif; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php if (!empty($items)): ?>
+                                        <?php $no = (($currentPage ?? 1) - 1) * ($perPage ?? 20) + 1; ?>
+                                        <?php foreach ($items as $item): ?>
+                                            <tr>
+                                                <td><?= $no++ ?></td>
+                                                <td><?= esc($item['nama_bahan']) ?></td>
+                                                <td>
+                                                    <?= $item['jumlah_bahan'] ?>
+                                                    <?php if ($item['jumlah_bahan'] <= 10): ?>
+                                                        <span class="text-danger ml-1">⚠️</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                <td>
+                                                    <span class="badge badge-info">
+                                                        <?= esc($item['satuan_bahan'] ?? 'gram') ?>
+                                                    </span>
+                                                </td>
+                                                <td><?= esc($item['lokasi']) ?></td>
+                                                <?php if (session()->get('role') === 'admin'): ?>
+                                                    <td>
+                                                        <button onclick="hapusBahan(<?= $item['id_bahan'] ?>, '<?= esc($item['nama_bahan']) ?>')" class="btn btn-sm btn-danger">
+                                                            🗑️ Hapus
+                                                        </button>
+                                                    </td>
+                                                <?php endif; ?>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
                                         <tr>
-                                            <td><?= $item['id_bahan'] ?></td>
-                                            <td><?= esc($item['nama_bahan']) ?></td>
-                                            <td>
-                                                <?= $item['jumlah_bahan'] ?>
-                                                <?php if ($item['jumlah_bahan'] <= 10): ?>
-                                                    <span class="text-danger ml-1">⚠️</span>
+                                            <td colspan="<?= session()->get('role') === 'admin' ? '6' : '5' ?>" class="text-center text-muted">
+                                                <?php if (!empty($search) || !empty($location)): ?>
+                                                    🔍 Tidak ada bahan yang sesuai dengan pencarian
+                                                <?php else: ?>
+                                                    🧪 Tidak ada data bahan
                                                 <?php endif; ?>
                                             </td>
-                                            <td><?= esc($item['satuan_bahan']) ?></td>
-                                            <td><?= esc($item['lokasi']) ?></td>
-                                            <?php if (session()->get('role') === 'admin'): ?>
-                                                <td>
-                                                    <button onclick="hapusBahan(<?= $item['id_bahan'] ?>, '<?= esc($item['nama_bahan']) ?>')" class="btn btn-sm btn-danger">
-                                                        🗑️ Hapus
-                                                    </button>
-                                                </td>
-                                            <?php endif; ?>
                                         </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="<?= session()->get('role') === 'admin' ? '6' : '5' ?>" class="text-center text-muted">
-                                            <?php if (!empty($search) || !empty($location)): ?>
-                                                🔍 Tidak ada bahan yang sesuai dengan pencarian
-                                            <?php else: ?>
-                                                🧪 Tidak ada data bahan
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -188,4 +201,4 @@
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/js/adminlte.min.js') ?>"></script>
 
 </body>
-</html
+</html>

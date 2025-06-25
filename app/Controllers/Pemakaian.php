@@ -187,22 +187,53 @@ class Pemakaian extends BaseController
 
         if ($jenis === 'alat') {
             $item = $this->alatModel->where('nama_alat', $nama)->first();
-            if (!$item) return $this->response->setStatusCode(404)->setJSON(['error' => 'Alat tidak ditemukan']);
+            if (!$item) {
+                return $this->response->setStatusCode(404)->setJSON(['error' => 'Alat tidak ditemukan']);
+            }
 
             return $this->response->setJSON([
-                'satuan_bahan' => '-',
+                'success' => true,
+                'satuan_options' => ['-'], 
+                'satuan_default' => '-',
                 'lokasi' => $item['lokasi'],
                 'jumlah_alat' => $item['jumlah_alat']
             ]);
         } elseif ($jenis === 'bahan') {
-            $item = $this->bahanModel->where('nama_bahan', $nama)->first();
-            if (!$item) return $this->response->setStatusCode(404)->setJSON(['error' => 'Bahan tidak ditemukan']);
+            // PERBAIKAN: Gunakan method khusus yang memastikan satuan terambil
+            $item = $this->bahanModel->getBahanWithSatuan($nama);
+            if (!$item) {
+                return $this->response->setStatusCode(404)->setJSON(['error' => 'Bahan tidak ditemukan']);
+            }
 
-            return $this->response->setJSON([
-                'satuan_bahan' => $item['satuan_bahan'],
+            // PERBAIKAN: Log untuk debug
+            log_message('debug', 'Item bahan data: ' . json_encode($item));
+            
+            $satuanDatabase = $item['satuan_bahan'] ?? 'gram';
+            log_message('debug', 'Satuan dari database: ' . $satuanDatabase);
+            
+            // Satuan yang diizinkan - HANYA 3 pilihan
+            $satuanTersedia = ['gram', 'ml', 'liter'];
+            
+            // Jika satuan database tidak ada di list, tambahkan di posisi pertama
+            if (!in_array($satuanDatabase, $satuanTersedia)) {
+                array_unshift($satuanTersedia, $satuanDatabase);
+            } else {
+                // Pindahkan satuan database ke posisi pertama
+                $satuanTersedia = array_diff($satuanTersedia, [$satuanDatabase]);
+                array_unshift($satuanTersedia, $satuanDatabase);
+            }
+            
+            $response = [
+                'success' => true,
+                'satuan_options' => $satuanTersedia,
+                'satuan_default' => $satuanDatabase,
                 'lokasi' => $item['lokasi'],
                 'jumlah_bahan' => $item['jumlah_bahan']
-            ]);
+            ];
+            
+            log_message('debug', 'Response data: ' . json_encode($response));
+            
+            return $this->response->setJSON($response);
         } else {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Jenis tidak dikenali']);
         }

@@ -315,10 +315,24 @@ document.addEventListener("DOMContentLoaded", function () {
             lokasiKurang.innerHTML = '';
 
             if (jenis === "bahan") {
-                satuanKurang.innerHTML = `<option value="${item.satuan_bahan}">${item.satuan_bahan}</option>`;
+                // PERBAIKAN: Gunakan satuan_options dari controller dengan proper fallback
+                if (item.satuan_options && Array.isArray(item.satuan_options) && item.satuan_options.length > 0) {
+                    item.satuan_options.forEach((satuan, index) => {
+                        const selected = (satuan === item.satuan_default) ? 'selected' : '';
+                        satuanKurang.innerHTML += `<option value="${satuan}" ${selected}>${satuan}</option>`;
+                    });
+                } else {
+                    // Fallback jika tidak ada satuan_options
+                    const defaultSatuan = item.satuan_default || 'gram';
+                    satuanKurang.innerHTML = `<option value="${defaultSatuan}" selected>${defaultSatuan}</option>`;
+                }
+                
                 jumlahKurang.max = item.jumlah_bahan;
-                stokTersedia.textContent = `${item.jumlah_bahan} ${item.satuan_bahan}`;
+                // Ambil satuan yang dipilih untuk display stok
+                const selectedSatuan = satuanKurang.options[satuanKurang.selectedIndex]?.value || item.satuan_default || 'gram';
+                stokTersedia.textContent = `${item.jumlah_bahan} ${selectedSatuan}`;
             } else {
+                // Untuk alat
                 satuanKurang.innerHTML = `<option value="-">-</option>`;
                 jumlahKurang.max = item.jumlah_alat;
                 stokTersedia.textContent = `${item.jumlah_alat} unit`;
@@ -364,15 +378,17 @@ function renderReview() {
     }
 
     let html = '<div class="table-responsive"><table class="table table-hover">';
-    html += '<thead><tr><th>Jenis</th><th>Nama</th><th>Jumlah</th><th>Lokasi</th><th>Aksi</th></tr></thead><tbody>';
+    html += '<thead><tr><th>Jenis</th><th>Nama</th><th>Jumlah</th><th>Satuan</th><th>Lokasi</th><th>Aksi</th></tr></thead><tbody>';
     
     reviewList.forEach((item, i) => {
         const typeIcon = item.jenis === 'alat' ? '🔧' : '🧪';
+        const satuan = item.satuan || (item.jenis === 'alat' ? '-' : 'gram');
         html += `
             <tr>
                 <td>${typeIcon} ${item.jenis.toUpperCase()}</td>
                 <td><strong>${item.nama}</strong></td>
                 <td><span class="badge badge-primary">${item.jumlah}</span></td>
+                <td><span class="badge badge-info">${satuan}</span></td>
                 <td>${item.lokasi}</td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm" onclick="hapusReview(${i})">
@@ -393,10 +409,17 @@ function tambahKeReview() {
     const nama = document.getElementById('namaKurang').value;
     const jumlah = parseInt(document.getElementById('jumlahKurang').value);
     const lokasi = document.getElementById('lokasiKurang').value;
+    const satuan = document.getElementById('satuanKurang').value; // Tambahkan ini
 
     // Validasi
     if (!jenis || !nama || !jumlah || !lokasi || jumlah <= 0) {
         alert("❌ Semua field harus diisi dengan benar.");
+        return;
+    }
+
+    // Validasi satuan untuk bahan
+    if (jenis === 'bahan' && (!satuan || satuan === '')) {
+        alert("❌ Satuan harus dipilih untuk bahan.");
         return;
     }
 
@@ -416,8 +439,16 @@ function tambahKeReview() {
         return;
     }
 
-    // Tambahkan ke review
-    reviewList.push({ jenis, nama, jumlah, lokasi });
+    // Tambahkan ke review dengan satuan
+    const reviewItem = { 
+        jenis, 
+        nama, 
+        jumlah, 
+        lokasi,
+        satuan: jenis === 'bahan' ? satuan : '-' // Tambahkan satuan
+    };
+    
+    reviewList.push(reviewItem);
     renderReview();
 
     // Reset form input
