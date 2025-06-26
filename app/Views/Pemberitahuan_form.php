@@ -2,28 +2,73 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Pemberitahuan</title>
+    <title>Dashboard Laboratorium</title>
 
-    <!-- AdminLTE CSS -->
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url('css/pemberitahuan.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Style -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-left: 4px solid #343a40;
+            padding-left: 10px;
+            color: #343a40;
+        }
+        .dashboard-title {
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: #343a40;
+        }
+        .welcome-text {
+            color: #6c757d;
+        }
+    </style>
 </head>
+
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">
 
-    <!-- Navbar -->
+<div class="wrapper">
     <?= view('partial/header') ?>
 
-    <!-- Content Wrapper -->
     <div class="content-wrapper">
         <div class="content-header">
-            <div class="container">
-                <h1 class="m-0 text-dark">🔔 Pemberitahuan</h1>
+            <div class="container py-2">
+                <h1 class="dashboard-title mb-2">Pemberitahuan</h1>
+                <p class="welcome-text mb-3">
+                    Halaman notifikasi peminjaman dan penggunaan
+                </p>
+
+                <?php if (isset($error_message)): ?>
+                    <div class="alert alert-danger"><?= esc($error_message) ?></div>
+                <?php endif; ?>
+
+                <?php if (!empty($alerts)): ?>
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i> Notifikasi Penting</h5>
+                        <?php foreach ($alerts as $alert): ?>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span><?= $alert['icon'] ?> <strong><?= $alert['title'] ?>:</strong> <?= $alert['message'] ?></span>
+                                <a href="<?= $alert['link'] ?>" class="btn btn-sm btn-warning"><?= $alert['action'] ?></a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -31,11 +76,10 @@
             <div class="container">
 
                 <?php if (session()->get('role') === 'admin'): ?>
-                    <!-- Daftar Peminjaman Alat -->
+
+                    <!-- Statistik Section -->
+                <h4 class="section-title mb-3">Daftar Peminjaman Alat</h4>
                     <div class="card mb-5">
-                        <div class="card-header bg-info text-white">
-                            <h5 class="card-title mb-0">Daftar Peminjaman Alat (Belum Disetujui)</h5>
-                        </div>
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
@@ -50,7 +94,7 @@
                                         <th>Status</th>
                                         <th>Aksi</th>
                                     </tr>
-                                </thead>
+                                </thead> 
                                 <tbody>
                                     <?php if (!empty($alat)): ?>
                                         <?php foreach ($alat as $item): ?>
@@ -78,18 +122,16 @@
                                             </tr>
                                         <?php endforeach ?>
                                     <?php else: ?>
-                                        <tr><td colspan="9">Tidak ada data.</td></tr>
+                                        <tr><td colspan="9">belum ada alat terpinjam</td></tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
+                <h4 class="section-title mb-3">Daftar Pengambilan Bahan</h4>
                     <!-- Daftar Pengambilan Bahan -->
                     <div class="card mb-5">
-                        <div class="card-header bg-info text-white">
-                            <h5 class="card-title mb-0">Daftar Pengambilan Bahan (Belum Disetujui)</h5>
-                        </div>
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
@@ -130,19 +172,19 @@
                                             </tr>
                                         <?php endforeach ?>
                                     <?php else: ?>
-                                        <tr><td colspan="8">Tidak ada data.</td></tr>
+                                        <tr><td colspan="8">Belum ada alat atau bahan terambil</td></tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
                 <?php endif; ?>
 
                 <?php if (session()->get('role') === 'user'): ?>
-                    <div class="card">
-                        <div class="card-header bg-warning text-dark">
-                            <h5 class="card-title mb-0">Daftar Peminjaman Alat (Sedang Dipinjam)</h5>
-                        </div>
+                <h4 class="section-title mb-3">Daftar Pengambilan Bahan</h4>
+                    <!-- Daftar Pengambilan Bahan -->
+                    <div class="card mb-5">
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
@@ -180,7 +222,7 @@
                                             </tr>
                                         <?php endforeach ?>
                                     <?php else: ?>
-                                        <tr><td colspan="9">Tidak ada data.</td></tr>
+                                        <tr><td colspan="9">Belum ada peminjaman</td></tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>

@@ -2,16 +2,44 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Manajemen Alat dan Bahan</title>
+    <title>Dashboard Laboratorium</title>
 
-    <!-- AdminLTE CSS -->
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url('assets/css/manajemen.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Style -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-left: 4px solid #343a40;
+            padding-left: 10px;
+            color: #343a40;
+        }
+        .dashboard-title {
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: #343a40;
+        }
+        .welcome-text {
+            color: #6c757d;
+        }
+    </style>
 </head>
+
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">
 
@@ -19,19 +47,41 @@
     <?= view('partial/header') ?>
 
     <!-- Content Wrapper -->
+    <div class="wrapper">
+    <?= view('partial/header') ?>
+
     <div class="content-wrapper">
         <div class="content-header">
-            <div class="container">
-                <h1 class="m-0 text-dark">🛠️ Manajemen Alat dan Bahan</h1>
+            <div class="container py-2">
+                <h1 class="dashboard-title mb-2">Manajemen Alat dan Bahan</h1>
+                <p class="welcome-text mb-3">
+                    Manajemen alat dan bahan Laboratorium
+                </p>
+
+                <?php if (isset($error_message)): ?>
+                    <div class="alert alert-danger"><?= esc($error_message) ?></div>
+                <?php endif; ?>
+
+                <?php if (!empty($alerts)): ?>
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i> Notifikasi Penting</h5>
+                        <?php foreach ($alerts as $alert): ?>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span><?= $alert['icon'] ?> <strong><?= $alert['title'] ?>:</strong> <?= $alert['message'] ?></span>
+                                <a href="<?= $alert['link'] ?>" class="btn btn-sm btn-warning"><?= $alert['action'] ?></a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="content">
             <div class="container">
-
+                <!-- Statistik Section -->
+                <h4 class="section-title mb-3">Tambahkan Alat</h4>
                 <!-- Form Tambah -->
                 <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">Tambah Data</div>
                     <div class="card-body">
                         <form action="<?= base_url('manajemen/tambah') ?>" method="post" id="formTambah">
                             <div class="form-group">
@@ -78,11 +128,13 @@
                     </div>
                 </div>
 
-                <!-- Form Kurangi -->
-                <div class="card">
-                    <div class="card-header bg-warning text-dark">Kurangi Data</div>
+                <!-- Statistik Section -->
+                <h4 class="section-title mb-3">Kurangi Alat</h4>
+                <!-- Form Tambah -->
+                <div class="card mb-4">
                     <div class="card-body">
-                        <form action="<?= base_url('manajemen/kurang') ?>" method="post" id="formKurang">
+    <form action="<?= base_url('manajemen/kurang') ?>" method="post" id="formKurang">
+
                             <div class="form-group">
                                 <label>Jenis:</label>
                                 <select name="jenis" id="jenisKurang" class="form-control" required>
@@ -137,6 +189,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    // === TAMBAH ===
     const jenisTambah = document.getElementById("jenisTambah");
     const satuanTambahWrapper = document.getElementById("satuanTambahWrapper");
     const lokasiTambahInput = document.getElementById("lokasiTambahInput");
@@ -169,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
         namaTambahInput.value = namaTambahInput.value.toLowerCase();
     });
 
+    // === KURANGI ===
     const jenisKurang = document.getElementById("jenisKurang");
     const namaKurang = document.getElementById("namaKurang");
     const satuanKurang = document.getElementById("satuanKurang");

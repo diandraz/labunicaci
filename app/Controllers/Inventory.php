@@ -82,54 +82,24 @@ class Inventory extends BaseController
 
         $search = $this->request->getGet('search') ?? '';
         $location = $this->request->getGet('location') ?? '';
-        $currentPage = $this->request->getGet('page') ?? 1;
+        $page = $this->request->getGet('page') ?? 1;
         $perPage = 20;
-        $offset = ($currentPage - 1) * $perPage;
 
-        // Query builder untuk alat
-        $builder = $this->alatModel->builder();
-        
-        if (!empty($search)) {
-            $builder->like('nama_alat', $search);
-        }
-        
-        if (!empty($location)) {
-            $builder->where('lokasi', $location);
-        }
-
-        // Hitung total untuk pagination
-        $total = $builder->countAllResults(false);
-        
-        // Ambil data dengan limit
-        $items = $builder->orderBy('nama_alat', 'ASC')
-                        ->limit($perPage, $offset)
-                        ->get()
-                        ->getResultArray();
-
-        // Get unique locations untuk dropdown
-        $locations = $this->alatModel->select('lokasi')
-                                   ->distinct()
-                                   ->where('lokasi IS NOT NULL')
-                                   ->orderBy('lokasi', 'ASC')
-                                   ->findAll();
-
-        $data = [
-            'title' => 'Daftar Alat',
-            'items' => $items,
-            'locations' => $locations,
+        $data = array_merge([
             'search' => $search,
             'location' => $location,
-            'currentPage' => $currentPage,
-            'perPage' => $perPage,
-            'total' => $total,
-            'totalPages' => ceil($total / $perPage)
-        ];
+            'currentPage' => $page,
+            'perPage' => $perPage
+        ], $this->getAlatData($search, $location, $page, $perPage));
+
+        $data['locations'] = $this->getAllLocations();
+        $data['statistics'] = $this->getStatistics();
 
         return view('daftar_alat_form', $data);
     }
 
     /**
-     * Halaman daftar bahan - SUDAH BENAR
+     * Halaman daftar bahan
      */
     public function daftar_bahan()
     {
@@ -138,55 +108,26 @@ class Inventory extends BaseController
             return redirect()->to('/login');
         }
 
-        $search = $this->request->getGet('search');
-        $location = $this->request->getGet('location');
-        
+        $search = $this->request->getGet('search') ?? '';
+        $location = $this->request->getGet('location') ?? '';
+        $page = $this->request->getGet('page') ?? 1;
         $perPage = 20;
-        $currentPage = $this->request->getGet('page') ?? 1;
-        $offset = ($currentPage - 1) * $perPage;
 
-        // PERBAIKAN: Gunakan method yang memastikan satuan terambil
-        $items = $this->bahanModel->getAllBahan($search, $location, $perPage, $offset);
-        
-        // Debug: Log untuk melihat apakah satuan_bahan ada
-        foreach ($items as $item) {
-            log_message('debug', 'Bahan: ' . $item['nama_bahan'] . ', Satuan: ' . ($item['satuan_bahan'] ?? 'NULL'));
-        }
-
-        // Get total untuk pagination
-        $totalBuilder = $this->bahanModel;
-        if ($search) {
-            $totalBuilder->like('nama_bahan', $search);
-        }
-        if ($location && $location !== 'Semua Lokasi') {
-            $totalBuilder->where('lokasi', $location);
-        }
-        $total = $totalBuilder->countAllResults();
-
-        // Get unique locations untuk dropdown
-        $locations = $this->bahanModel->select('lokasi')
-                                     ->distinct()
-                                     ->where('lokasi IS NOT NULL')
-                                     ->orderBy('lokasi', 'ASC')
-                                     ->findAll();
-
-        $data = [
-            'title' => 'Daftar Bahan',
-            'items' => $items,
-            'locations' => $locations,
+        $data = array_merge([
             'search' => $search,
             'location' => $location,
-            'currentPage' => $currentPage,
-            'perPage' => $perPage,
-            'total' => $total,
-            'totalPages' => ceil($total / $perPage)
-        ];
+            'currentPage' => $page,
+            'perPage' => $perPage
+        ], $this->getBahanData($search, $location, $page, $perPage));
+
+        $data['locations'] = $this->getAllLocations();
+        $data['statistics'] = $this->getStatistics();
 
         return view('daftar_bahan_form', $data);
     }
 
     /**
-     * Halaman daftar instrumen - PERBAIKAN
+     * Halaman daftar instrumen
      */
     public function daftar_instrumen()
     {
@@ -197,48 +138,18 @@ class Inventory extends BaseController
 
         $search = $this->request->getGet('search') ?? '';
         $location = $this->request->getGet('location') ?? '';
-        $currentPage = $this->request->getGet('page') ?? 1;
+        $page = $this->request->getGet('page') ?? 1;
         $perPage = 20;
-        $offset = ($currentPage - 1) * $perPage;
 
-        // Query builder untuk instrumen
-        $builder = $this->instrumenModel->builder();
-        
-        if (!empty($search)) {
-            $builder->like('nama_instrumen', $search);
-        }
-        
-        if (!empty($location)) {
-            $builder->where('lokasi', $location);
-        }
-
-        // Hitung total untuk pagination
-        $total = $builder->countAllResults(false);
-        
-        // Ambil data dengan limit
-        $items = $builder->orderBy('nama_instrumen', 'ASC')
-                        ->limit($perPage, $offset)
-                        ->get()
-                        ->getResultArray();
-
-        // Get unique locations untuk dropdown
-        $locations = $this->instrumenModel->select('lokasi')
-                                         ->distinct()
-                                         ->where('lokasi IS NOT NULL')
-                                         ->orderBy('lokasi', 'ASC')
-                                         ->findAll();
-
-        $data = [
-            'title' => 'Daftar Instrumen',
-            'items' => $items,
-            'locations' => $locations,
+        $data = array_merge([
             'search' => $search,
             'location' => $location,
-            'currentPage' => $currentPage,
-            'perPage' => $perPage,
-            'total' => $total,
-            'totalPages' => ceil($total / $perPage)
-        ];
+            'currentPage' => $page,
+            'perPage' => $perPage
+        ], $this->getInstrumenData($search, $location, $page, $perPage));
+
+        $data['locations'] = $this->getAllLocations();
+        $data['statistics'] = $this->getStatistics();
 
         return view('daftar_instrumen_form', $data);
     }

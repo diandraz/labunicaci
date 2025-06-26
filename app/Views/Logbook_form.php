@@ -2,16 +2,44 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Logbook Laboratorium</title>
+    <title>Dashboard Laboratorium</title>
 
-    <!-- AdminLTE CSS -->
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="<?= base_url('css/logbook.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Style -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-left: 4px solid #343a40;
+            padding-left: 10px;
+            color: #343a40;
+        }
+        .dashboard-title {
+            font-weight: 600;
+            font-size: 1.75rem;
+            color: #343a40;
+        }
+        .welcome-text {
+            color: #6c757d;
+        }
+    </style>
 </head>
+
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 <div class="wrapper">
 
@@ -21,28 +49,43 @@
     <!-- Content Wrapper -->
     <div class="content-wrapper">
         <div class="content-header">
-            <div class="container">
-                <h1 class="m-0">📚 Logbook Laboratorium</h1>
-                <p>Riwayat Peminjaman Alat dan Pemakaian Bahan Laboratorium</p>
+            <div class="container py-2">
+                <h1 class="dashboard-title mb-2">Logbook</h1>
+                <p class="welcome-text mb-3">
+                    Riwayat Peminjaman Alat dan bahan Laboratorium
+                </p>
+
+                <?php if (isset($error_message)): ?>
+                    <div class="alert alert-danger"><?= esc($error_message) ?></div>
+                <?php endif; ?>
+
+                <?php if (!empty($alerts)): ?>
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i> Notifikasi Penting</h5>
+                        <?php foreach ($alerts as $alert): ?>
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span><?= $alert['icon'] ?> <strong><?= $alert['title'] ?>:</strong> <?= $alert['message'] ?></span>
+                                <a href="<?= $alert['link'] ?>" class="btn btn-sm btn-warning"><?= $alert['action'] ?></a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
 
         <div class="content">
             <div class="container">
-
-                <!-- Statistik -->
-                <div class="logbook-statistik">
-                    <div class="stat-title">
-                         <span style="font-size:2rem;">📊</span> Statistik
-                 </div>
-                     <ul>
-                        <li>Total Peminjaman Alat: <strong>39</strong></li>
-                        <li>Total Pemakaian Bahan: <strong>19</strong></li>
-                        <li>Total Semua Aktivitas: <strong>58</strong></li>
-                        <li>Total Disetujui: <strong>47</strong></li>
-                        <li>Total Pending: <strong>2</strong></li>
-                        <li>Aktivitas Hari Ini: <strong>2</strong></li>
-                        </ul>
+             <!-- Statistik Section -->
+                <h4 class="section-title mb-3">Statistik Overview</h4>
+                <div class="mb-4">
+                    <ul>
+                        <li>Total Peminjaman Alat: <strong><?= $statistik['total_alat'] ?? 0 ?></strong></li>
+                        <li>Total Pemakaian Bahan: <strong><?= $statistik['total_bahan'] ?? 0 ?></strong></li>
+                        <li>Total Semua Aktivitas: <strong><?= $statistik['total_semua'] ?? 0 ?></strong></li>
+                        <li>Total Disetujui: <strong><?= $statistik['total_approve'] ?? 0 ?></strong></li>
+                        <li>Total Pending: <strong><?= $statistik['total_pending'] ?? 0 ?></strong></li>
+                        <li>Aktivitas Hari Ini: <strong><?= $statistik['aktivitas_hari_ini'] ?? 0 ?></strong></li>
+                    </ul>
                 </div>
 
                 <?php if (isset($error_message)): ?>
@@ -52,114 +95,95 @@
                 <?php endif; ?>
 
                 <div class="mb-3">
-                    <a href="#" class="btn-csv"><i class="fas fa-file-csv"></i> Export CSV</a>
+                    <a href="<?= site_url('logbook/export') ?>" class="btn btn-outline-primary">📄 Export CSV</a>
                 </div>
 
                 <!-- Logbook Alat -->
-                <div class="logbook-table-container">
-                    <div class="card mb-4">
-                        <div class="card-header"><h3>🔧 Logbook Peminjaman Alat</h3></div>
-                        <div class="card-body p-0">
-                            <?php if (!empty($dataAlat)): ?>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>NO</th>
-                                                <th>NAMA PENGGUNA</th>
-                                                <th>NAMA ALAT</th>
-                                                <th>PENAMBAHAN</th>
-                                                <th>PENGURANGAN</th>
-                                                <th>TANGGAL DIPINJAM</th>
-                                                <th>TANGGAL KEMBALI</th>
-                                                <th>TUJUAN PEMAKAIAN</th>
-                                                <th>STATUS</th>
-                                                <th>PESAN</th>
-                                                <th>AKSI</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 1; foreach ($dataAlat as $alat): ?>
-                                                <tr>
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= esc($alat['nama_lengkap'] ?? '-') ?></td>
-                                                    <td><?= esc($alat['nama_alat'] ?? '-') ?></td>
-                                                    <td><?= esc($alat['penambahan'] ?? '0') ?></td>
-                                                    <td><?= esc($alat['pengurangan'] ?? '0') ?></td>
-                                                    <td><?= !empty($alat['tanggal_dipinjam']) ? date('d/m/Y H:i', strtotime($alat['tanggal_dipinjam'])) : '-' ?></td>
-                                                    <td><?= !empty($alat['tanggal_kembali']) ? date('d/m/Y H:i', strtotime($alat['tanggal_kembali'])) : '⏳ Belum Kembali' ?></td>
-                                                    <td><?= esc($alat['tujuan_pemakaian'] ?? '-') ?></td>
-                                                    <td><span class="badge badge-<?= ($alat['status'] ?? '') === 'approve' ? 'success' : 'warning' ?>"><?= esc($alat['status'] ?? '-') ?></span></td>
-                                                    <td><?= esc($alat['pesan'] ?? '-') ?></td>
-                                                    <td><button class="btn btn-sm btn-info" onclick="showDetail('alat', <?= $alat['id_logalat'] ?>)">👁️ Detail</button></td>
-                                                </tr>
-                                            <?php endforeach ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>📊 Total peminjaman alat: <?= count($dataAlat) ?></strong>
-                                </div>
-                            <?php else: ?>
-                                <div class="p-4 text-center">
-                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                    <p class="text-muted">📭 Tidak ada data peminjaman alat.</p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header"><h3>🔧 Logbook Peminjaman Alat</h3></div>
+                    <div class="card-body table-responsive">
+                        <?php if (!empty($dataAlat)): ?>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Nama Alat</th>
+                                        <th>Penambahan</th>
+                                        <th>Pengurangan</th>
+                                        <th>Tanggal Dipinjam</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Tujuan Pemakaian</th>
+                                        <th>Status</th>
+                                        <th>Pesan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $no = 1; foreach ($dataAlat as $alat): ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= esc($alat['nama_lengkap'] ?? '-') ?></td>
+                                            <td><?= esc($alat['nama_alat'] ?? '-') ?></td>
+                                            <td><?= esc($alat['penambahan'] ?? '0') ?></td>
+                                            <td><?= esc($alat['pengurangan'] ?? '0') ?></td>
+                                            <td><?= !empty($alat['tanggal_dipinjam']) ? date('d/m/Y H:i', strtotime($alat['tanggal_dipinjam'])) : '-' ?></td>
+                                            <td><?= !empty($alat['tanggal_kembali']) ? date('d/m/Y H:i', strtotime($alat['tanggal_kembali'])) : '⏳ Belum Kembali' ?></td>
+                                            <td><?= esc($alat['tujuan_pemakaian'] ?? '-') ?></td>
+                                            <td><?= esc($alat['status'] ?? '-') ?></td>
+                                            <td><?= esc($alat['pesan'] ?? '-') ?></td>
+                                            <td><button class="btn btn-sm btn-info" onclick="showDetail('alat', <?= $alat['id_logalat'] ?>)">👁️ Detail</button></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                            <p><strong>Total peminjaman alat: <?= count($dataAlat) ?></strong></p>
+                        <?php else: ?>
+                            <p>📭 Tidak ada data peminjaman alat.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
-
                 <!-- Logbook Bahan -->
-                <div class="logbook-table-container">
-                    <div class="card mb-4">
-                        <div class="card-header"><h3>🧪 Logbook Pemakaian Bahan</h3></div>
-                        <div class="card-body p-0">
-                            <?php if (!empty($dataBahan)): ?>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>NO</th>
-                                                <th>NAMA PENGGUNA</th>
-                                                <th>NAMA BAHAN</th>
-                                                <th>PENAMBAHAN</th>
-                                                <th>PENGURANGAN</th>
-                                                <th>TANGGAL</th>
-                                                <th>TUJUAN PEMAKAIAN</th>
-                                                <th>STATUS</th>
-                                                <th>PESAN</th>
-                                                <th>AKSI</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 1; foreach ($dataBahan as $bahan): ?>
-                                                <tr>
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= esc($bahan['nama_lengkap'] ?? '-') ?></td>
-                                                    <td><?= esc($bahan['nama_bahan'] ?? '-') ?></td>
-                                                    <td><?= esc($bahan['penambahan'] ?? '0') ?></td>
-                                                    <td><?= esc($bahan['pengurangan'] ?? '0') ?></td>
-                                                    <td><?= !empty($bahan['tanggal']) ? date('d/m/Y H:i', strtotime($bahan['tanggal'])) : '-' ?></td>
-                                                    <td><?= esc($bahan['tujuan_pemakaian'] ?? '-') ?></td>
-                                                    <td><span class="badge badge-<?= ($bahan['status'] ?? '') === 'approve' ? 'success' : 'warning' ?>"><?= esc($bahan['status'] ?? '-') ?></span></td>
-                                                    <td><?= esc($bahan['pesan'] ?? '-') ?></td>
-                                                    <td><button class="btn btn-sm btn-info" onclick="showDetail('bahan', <?= $bahan['id_logbahan'] ?>)">👁️ Detail</button></td>
-                                                </tr>
-                                            <?php endforeach ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>📊 Total pemakaian bahan: <?= count($dataBahan) ?></strong>
-                                </div>
-                            <?php else: ?>
-                                <div class="p-4 text-center">
-                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
-                                    <p class="text-muted">📭 Tidak ada data pemakaian bahan.</p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
+                <div class="card mb-4">
+                    <div class="card-header"><h3>🧪 Logbook Pemakaian Bahan</h3></div>
+                    <div class="card-body table-responsive">
+                        <?php if (!empty($dataBahan)): ?>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Nama Bahan</th>
+                                        <th>Penambahan</th>
+                                        <th>Pengurangan</th>
+                                        <th>Tanggal</th>
+                                        <th>Tujuan Pemakaian</th>
+                                        <th>Status</th>
+                                        <th>Pesan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $no = 1; foreach ($dataBahan as $bahan): ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td><?= esc($bahan['nama_lengkap'] ?? '-') ?></td>
+                                            <td><?= esc($bahan['nama_bahan'] ?? '-') ?></td>
+                                            <td><?= esc($bahan['penambahan'] ?? '0') ?></td>
+                                            <td><?= esc($bahan['pengurangan'] ?? '0') ?></td>
+                                            <td><?= !empty($bahan['tanggal']) ? date('d/m/Y H:i', strtotime($bahan['tanggal'])) : '-' ?></td>
+                                            <td><?= esc($bahan['tujuan_pemakaian'] ?? '-') ?></td>
+                                            <td><?= esc($bahan['status'] ?? '-') ?></td>
+                                            <td><?= esc($bahan['pesan'] ?? '-') ?></td>
+                                            <td><button class="btn btn-sm btn-info" onclick="showDetail('bahan', <?= $bahan['id_logbahan'] ?>)">👁️ Detail</button></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                            <p><strong>Total pemakaian bahan: <?= count($dataBahan) ?></strong></p>
+                        <?php else: ?>
+                            <p>📭 Tidak ada data pemakaian bahan.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -187,7 +211,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- AdminLTE Scripts -->
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/jquery/jquery.min.js') ?>"></script>
