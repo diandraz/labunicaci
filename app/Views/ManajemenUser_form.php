@@ -4,22 +4,66 @@
     <meta charset="UTF-8">
     <title>Manajemen User</title>
 
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
 
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Style -->
+    <style>
+        body {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/2.jpg') ?>') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+        .wrapper, .content-wrapper {
+            background: transparent !important;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-left: 4px solidrgb(255, 255, 255);
+            padding-left: 10px;
+            color:rgb(252, 252, 252);
+        }
+        .dashboard-title {
+            font-weight: 600;
+            font-size: 1.75rem;
+            color:rgb(244, 244, 245);
+        }
+        .welcome-text {
+            color:rgb(244, 244, 245);
+        }
+        
+        /* Sembunyikan ikon pada badge role dan tombol aksi di tabel user */
+        .table-user td i,
+        .table-user .badge i,
+        .table-user .btn i {
+            display: none !important;
+        }
+    </style>
 </head>
+
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 
 <div class="wrapper">
-
     <?= view('partial/header') ?>
 
     <div class="content-wrapper">
-        <div class="content-header">
-            <div class="container">
-                <h1 class="m-0 text-dark">👥 Manajemen User</h1>
-                <p class="text-muted">Kelola pengguna sistem laboratorium</p>
+   <div class="content-header">
+            <div class="container py-2">
+                <h1 class="dashboard-title mb-2">Manajemen User</h1>
+                <p class="welcome-text mb-3">
+                    Kelola pengguna sistem laboratorium
+                </p>
             </div>
         </div>
 
@@ -41,7 +85,7 @@
                 <!-- Statistik User -->
                 <div class="row mb-4">
                     <div class="col-md-12">
-                        <h3><i class="fas fa-chart-bar"></i> Statistik User</h3>
+                        <h3 class="section-title mb-3">Statistik User</h3>
                     </div>
                     <div class="col-md-4">
                         <div class="card bg-primary text-white">
@@ -81,21 +125,21 @@
                 <!-- Filter Section -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h5><i class="fas fa-filter"></i> Filter & Pencarian</h5>
+                        <h5></i> Filter & Pencarian</h5>
                     </div>
                     <div class="card-body">
                         <form method="GET" action="<?= site_url('manajemen-user') ?>" id="filterForm">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label><i class="fas fa-search"></i> Cari User:</label>
+                                        <label></i> Cari User</label>
                                         <input type="text" name="search" id="searchInput" value="<?= esc($search) ?>" 
                                                placeholder="Nama, email, cohort, prodi..." class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label><i class="fas fa-user-tag"></i> Filter Role:</label>
+                                        <label></i> Filter Role</label>
                                         <select name="role" id="roleFilter" class="form-control">
                                             <option value="">Semua Role</option>
                                             <option value="admin" <?= $role === 'admin' ? 'selected' : '' ?>>Admin</option>
@@ -122,14 +166,14 @@
                 <!-- Daftar User -->
                 <div class="card">
                     <div class="card-header">
-                        <h5><i class="fas fa-users"></i> Daftar User</h5>
+                        <h5></i> Daftar User</h5>
                         <p class="mb-0">Menampilkan <?= count($users) ?> dari <?= $totalUsers ?> user</p>
                     </div>
                     <div class="card-body p-0">
                         <?php if (!empty($users)): ?>
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover mb-0">
-                                    <thead class="thead-dark">
+                                <table class="table table-striped table-hover mb-0 table-user">
+                                    <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Foto</th>
@@ -149,10 +193,10 @@
                                                 <td>
                                                     <?php if (!empty($user['foto_profil'])): ?>
                                                         <img src="<?= base_url('uploads/profiles/' . $user['foto_profil']) ?>" 
-                                                             class="img-circle img-size-32" alt="Foto <?= esc($user['nama_lengkap']) ?>">
+                                                             class="img-circle" alt="Foto <?= esc($user['nama_lengkap']) ?>">
                                                     <?php else: ?>
                                                         <div class="img-circle bg-secondary d-flex align-items-center justify-content-center" 
-                                                             style="width: 32px; height: 32px; font-size: 14px;">
+                                                             style="width: 40px; height: 40px; font-size: 18px;">
                                                             <i class="fas fa-user"></i>
                                                         </div>
                                                     <?php endif; ?>
@@ -325,7 +369,11 @@
 
 </div>
 
+<!-- JQUERY HARUS PALING ATAS -->
+<script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/jquery/jquery.min.js') ?>"></script>
+<!-- Bootstrap JS -->
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<!-- AdminLTE JS -->
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/js/adminlte.min.js') ?>"></script>
 
 <script>

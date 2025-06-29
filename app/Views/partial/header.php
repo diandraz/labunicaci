@@ -1,4 +1,4 @@
-<header class="main-header navbar navbar-expand navbar-white navbar-light">
+<header class="main-header navbar navbar-expand navbar-white navbar-light" style="position:relative;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -36,4 +36,9 @@
             <a href="/logout" class="nav-link text-danger">Logout</a>
         </li>
     </ul>
+    <!-- Logo kanan -->
+    <div class="ml-auto d-flex align-items-center" style="position:absolute; right:30px; top:0; height:100%;">
+        <img src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/logo_kimia.png') ?>" alt="Logo Kimia" style="height:38px; margin-right:12px;">
+        <img src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/logo_unhanri.png') ?>" alt="Logo Unhanri" style="height:38px;">
+    </div>
 </header>

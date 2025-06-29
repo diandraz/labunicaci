@@ -1,49 +1,39 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Laboratorium</title>
+    <title>Registrasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- AdminLTE -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') ?>">
+    <!-- iCheck Bootstrap -->
+    <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css') ?>">
+    <!-- AdminLTE -->
     <link rel="stylesheet" href="<?= base_url('adminlte/AdminLTE-3.2.0/dist/css/adminlte.min.css') ?>">
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Custom Style -->
+    <!-- Custom CSS eksternal -->
+    <link rel="stylesheet" href="<?= base_url('css/registrasi.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
+          <!-- Custom Style -->
     <style>
-        body {
+   body {
             font-family: 'Poppins', 'Inter', sans-serif;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/3.jpg') ?>') no-repeat center center fixed;
+            background-size: cover;
+            
         }
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            border-left: 4px solid #343a40;
-            padding-left: 10px;
-            color: #343a40;
-        }
-        .dashboard-title {
-            font-weight: 600;
-            font-size: 1.75rem;
-            color: #343a40;
-        }
-        .welcome-text {
-            color: #6c757d;
-        }
+    .login-logo a {
+    color: #fff !important;
+}
     </style>
-</head>
 
+ 
+</head>
 <body class="hold-transition login-page">
+
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Registrasi</b> Akun</a>
+    <div class="login-logo text-center">
+        <img src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/logo.png') ?>" alt="Logo Labunica" style="max-width:200px; margin-bottom:1px; display:block; margin-left:auto; margin-right:auto;">
     </div>
 
     <div class="card">
@@ -161,5 +151,6 @@
         return true;
     }
 </script>
+
 </body>
 </html>
