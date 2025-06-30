@@ -17,33 +17,52 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Custom Style -->
     <style>
         body {
             font-family: 'Poppins', 'Inter', sans-serif;
-            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/4.jpg') ?>') no-repeat center center fixed !important;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/5.jpg') ?>') no-repeat center center fixed !important;
             background-size: cover !important;
+            position: relative;
         }
-        .wrapper, .content-wrapper {
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .wrapper,
+        .content-wrapper {
             background: transparent !important;
         }
+
         .section-title {
             font-size: 1.2rem;
             font-weight: 500;
-            border-left: 4px solidrgb(255, 255, 255);
+            border-left: 4px solid rgb(255, 255, 255);
             padding-left: 10px;
-            color:rgb(252, 252, 252);
+            color: rgb(252, 252, 252);
         }
+
         .dashboard-title {
             font-weight: 600;
             font-size: 1.75rem;
-            color:rgb(244, 244, 245);
+            color: rgb(244, 244, 245);
         }
+
         .welcome-text {
-            color:rgb(244, 244, 245);
+            color: rgb(244, 244, 245);
         }
-        
-        /* Sembunyikan ikon pada badge role dan tombol aksi di tabel user */
+
+        .dashboard-date {
+            color: #fff !important;
+        }
+
         .table-user td i,
         .table-user .badge i,
         .table-user .btn i {
@@ -63,7 +82,7 @@
                 <h1 class="dashboard-title mb-2">Daftar Alat</h1>
                 <p class="welcome-text mb-3">
                     Selamat datang, <strong><?= esc($user_info['nama'] ?? 'User') ?></strong>!
-                    <span class="text-muted">(<?= date('l, d F Y') ?>)</span>
+                    <span class="dashboard-date">(<?= date('l, d F Y') ?>)</span>
                 </p>
 
                 <?php if (isset($error_message)): ?>
@@ -90,12 +109,12 @@
                 <!-- FORM PENCARIAN -->
                 <form class="form-inline mb-3" method="GET" action="/inventory/daftar-alat">
                     <div class="form-group mr-2">
-                        <input type="text" name="search" class="form-control" placeholder="🔍 Cari nama alat..." value="<?= esc($search ?? '') ?>">
+                        <input type="text" name="search" class="form-control" placeholder=" Cari nama alat..." value="<?= esc($search ?? '') ?>">
                     </div>
 
                     <div class="form-group mr-2">
                         <select name="location" class="form-control">
-                            <option value="">📍 Semua Lokasi</option>
+                            <option value=""> Semua Lokasi</option>
                             <?php if (!empty($locations)): ?>
                                 <?php foreach ($locations as $loc): ?>
                                     <option value="<?= esc($loc) ?>" <?= ($location ?? '') == $loc ? 'selected' : '' ?>>
@@ -106,14 +125,14 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary mr-2">🔍 Cari</button>
-                    <a href="/inventory/daftar-alat" class="btn btn-secondary">🗑️ Reset</a>
+                    <button type="submit" class="btn btn-primary mr-2"> Cari</button>
+                    <a href="/inventory/daftar-alat" class="btn btn-secondary">Reset</a>
                 </form>
 
                 <!-- INFO HASIL PENCARIAN -->
                 <?php if (!empty($search) || !empty($location)): ?>
                     <div class="mb-3">
-                        <strong>📊 Hasil Pencarian:</strong>
+                        <strong>Hasil Pencarian:</strong>
                         <?php if (!empty($search)): ?>
                             Nama: "<em><?= esc($search) ?></em>"
                         <?php endif; ?>
@@ -130,6 +149,7 @@
                         <table class="table table-bordered table-hover text-nowrap">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama Alat</th>
                                     <th>Jumlah</th>
                                     <th>Lokasi</th>
@@ -140,34 +160,33 @@
                             </thead>
                             <tbody>
                                 <?php if (!empty($items)): ?>
-                                    <?php foreach ($items as $item): ?>
+                                    <?php foreach ($items as $index => $item): ?>
                                         <tr>
-    <td><?= esc($item['nama_alat']) ?></td>
-    <td>
-        <?= $item['jumlah_alat'] ?>
-        <?php if ($item['jumlah_alat'] <= 5): ?>
-            <span class="text-danger">⚠️</span>
-        <?php endif; ?>
-    </td>
-    <td><?= esc($item['lokasi']) ?></td>
-    <?php if (session()->get('role') === 'admin'): ?>
-        <td>
-            <button class="btn btn-danger btn-sm" onclick="hapusAlat(<?= $item['id_alat'] ?>, '<?= esc($item['nama_alat']) ?>')">
-                🗑️ Hapus
-            </button>
-        </td>
-    <?php endif; ?>
-</tr>
-
+                                            <td><?= ($currentPage - 1) * $perPage + $index + 1 ?></td>
+                                            <td><?= esc($item['nama_alat']) ?></td>
+                                            <td>
+                                                <?= $item['jumlah_alat'] ?>
+                                                <?php if ($item['jumlah_alat'] <= 5): ?>
+                                                    <span class="text-danger">⚠️</span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?= esc($item['lokasi']) ?></td>
+                                            <?php if (session()->get('role') === 'admin'): ?>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm" onclick="hapusAlat(<?= $item['id_alat'] ?>, '<?= esc($item['nama_alat']) ?>')">
+                                                        🗑️ Hapus
+                                                    </button>
+                                                </td>
+                                            <?php endif; ?>
+                                        </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="<?= session()->get('role') === 'admin' ? '4' : '3' ?>" class="text-center">
-
+                                        <td colspan="<?= session()->get('role') === 'admin' ? '5' : '4' ?>" class="text-center">
                                             <?php if (!empty($search) || !empty($location)): ?>
-                                                🔍 Tidak ada alat yang sesuai dengan pencarian
+                                                 Tidak ada alat yang sesuai dengan pencarian
                                             <?php else: ?>
-                                                📦 Tidak ada data alat
+                                                 Tidak ada data alat
                                             <?php endif; ?>
                                         </td>
                                     </tr>
@@ -220,7 +239,7 @@
 <?php if (session()->get('role') === 'admin'): ?>
 <script>
     function hapusAlat(id, nama) {
-        if (confirm(`⚠️ Yakin ingin menghapus alat "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan!`)) {
+        if (confirm(`Yakin ingin menghapus alat "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan!`)) {
             fetch(`/inventory/hapus-alat/${id}`, {
                 method: 'POST',
                 headers: {
@@ -234,14 +253,14 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('✅ Alat berhasil dihapus!');
+                    alert('Alat berhasil dihapus!');
                     location.reload();
                 } else {
-                    alert('❌ Error: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
             })
             .catch(error => {
-                alert('❌ Terjadi kesalahan saat menghapus data');
+                alert('Terjadi kesalahan saat menghapus data');
                 console.error('Error:', error);
             });
         }

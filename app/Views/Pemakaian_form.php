@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dashboard Laboratorium</title>
 
-    <!-- Bootstrap 5 -->
+   <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- AdminLTE -->
@@ -19,26 +19,39 @@
 
     <!-- Custom Style -->
     <style>
-        body {
+      body {
             font-family: 'Poppins', 'Inter', sans-serif;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/5.jpg') ?>') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+        .wrapper, .content-wrapper {
+            background: transparent !important;
         }
         .section-title {
             font-size: 1.2rem;
             font-weight: 500;
-            border-left: 4px solid #343a40;
+            border-left: 4px solid rgb(255, 255, 255);
             padding-left: 10px;
-            color: #343a40;
+            color:rgb(252, 252, 252);
         }
         .dashboard-title {
             font-weight: 600;
             font-size: 1.75rem;
-            color: #343a40;
+            color:rgb(244, 244, 245);
         }
         .welcome-text {
-            color: #6c757d;
+            color:rgb(244, 244, 245);
+        }
+        
+        /* Sembunyikan ikon pada badge role dan tombol aksi di tabel user */
+        .table-user td i,
+        .table-user .badge i,
+        .table-user .btn i {
+            display: none !important;
         }
     </style>
 </head>
+
 
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
 

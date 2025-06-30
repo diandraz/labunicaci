@@ -19,31 +19,43 @@
 
     <!-- Custom Style -->
     <style>
-          body {
+        body {
             font-family: 'Poppins', 'Inter', sans-serif;
-            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/4.jpg') ?>') no-repeat center center fixed !important;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/3.jpg') ?>') no-repeat center center fixed !important;
             background-size: cover !important;
+            position: relative;
         }
-        .wrapper, .content-wrapper {
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .wrapper,
+        .content-wrapper {
             background: transparent !important;
         }
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            border-left: 4px solidrgb(255, 255, 255);
-            padding-left: 10px;
-            color:rgb(252, 252, 252);
-        }
+
         .dashboard-title {
             font-weight: 600;
             font-size: 1.75rem;
-            color:rgb(244, 244, 245);
+            color: #f4f4f5;
         }
+
         .welcome-text {
-            color:rgb(244, 244, 245);
+            color: #f4f4f5;
         }
-        
-        /* Sembunyikan ikon pada badge role dan tombol aksi di tabel user */
+
+        .dashboard-date {
+            color: #fff !important;
+        }
+
         .table-user td i,
         .table-user .badge i,
         .table-user .btn i {
@@ -53,7 +65,6 @@
 </head>
 
 <body class="hold-transition layout-navbar-fixed layout-top-nav">
-
 <div class="wrapper">
     <?= view('partial/header') ?>
 
@@ -63,7 +74,7 @@
                 <h1 class="dashboard-title mb-2">Daftar Bahan</h1>
                 <p class="welcome-text mb-3">
                     Selamat datang, <strong><?= esc($user_info['nama'] ?? 'User') ?></strong>!
-                    <span class="text-muted">(<?= date('l, d F Y') ?>)</span>
+                    <span class="dashboard-date">(<?= date('l, d F Y') ?>)</span>
                 </p>
 
                 <?php if (isset($error_message)): ?>
@@ -87,14 +98,15 @@
         <div class="content">
             <div class="container">
 
+                <!-- Form Pencarian -->
                 <form method="GET" action="/inventory/daftar-bahan" class="mb-3">
                     <div class="form-row">
                         <div class="col-md-5 mb-2">
-                            <input type="text" name="search" class="form-control" placeholder="🔍 Cari nama bahan..." value="<?= esc($search ?? '') ?>">
+                            <input type="text" name="search" class="form-control" placeholder="Cari nama bahan..." value="<?= esc($search ?? '') ?>">
                         </div>
                         <div class="col-md-4 mb-2">
                             <select name="location" class="form-control">
-                                <option value="">📍 Semua Lokasi</option>
+                                <option value="">Semua Lokasi</option>
                                 <?php if (!empty($locations)): ?>
                                     <?php foreach ($locations as $loc): ?>
                                         <option value="<?= esc($loc) ?>" <?= ($location ?? '') == $loc ? 'selected' : '' ?>><?= esc($loc) ?></option>
@@ -103,27 +115,28 @@
                             </select>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <button type="submit" class="btn btn-primary">🔍 Cari</button>
-                            <a href="/inventory/daftar-bahan" class="btn btn-secondary">🗑️ Reset</a>
+                            <button type="submit" class="btn btn-primary">Cari</button>
+                            <a href="/inventory/daftar-bahan" class="btn btn-secondary">Reset</a>
                         </div>
                     </div>
                 </form>
 
                 <?php if (!empty($search) || !empty($location)): ?>
                     <div class="alert alert-info">
-                        <strong>📊 Hasil Pencarian:</strong>
+                        <strong>Hasil Pencarian:</strong>
                         <?php if (!empty($search)): ?>Nama: "<em><?= esc($search) ?></em>"<?php endif; ?>
                         <?php if (!empty($location)): ?> Lokasi: "<em><?= esc($location) ?></em>"<?php endif; ?>
                         - Ditemukan <strong><?= $totalItems ?? 0 ?></strong> bahan
                     </div>
                 <?php endif; ?>
 
+                <!-- Tabel Bahan -->
                 <div class="card">
                     <div class="card-body table-responsive p-0">
                         <table class="table table-bordered table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nama Bahan</th>
                                     <th>Jumlah</th>
                                     <th>Satuan</th>
@@ -135,9 +148,9 @@
                             </thead>
                             <tbody>
                                 <?php if (!empty($items)): ?>
-                                    <?php foreach ($items as $item): ?>
+                                    <?php foreach ($items as $index => $item): ?>
                                         <tr>
-                                            <td><?= $item['id_bahan'] ?></td>
+                                            <td><?= ($currentPage - 1) * $perPage + $index + 1 ?></td>
                                             <td><?= esc($item['nama_bahan']) ?></td>
                                             <td>
                                                 <?= $item['jumlah_bahan'] ?>
@@ -149,9 +162,7 @@
                                             <td><?= esc($item['lokasi']) ?></td>
                                             <?php if (session()->get('role') === 'admin'): ?>
                                                 <td>
-                                                    <button onclick="hapusBahan(<?= $item['id_bahan'] ?>, '<?= esc($item['nama_bahan']) ?>')" class="btn btn-sm btn-danger">
-                                                        🗑️ Hapus
-                                                    </button>
+                                                    <button onclick="hapusBahan(<?= $item['id_bahan'] ?>, '<?= esc($item['nama_bahan']) ?>')" class="btn btn-sm btn-danger">Hapus</button>
                                                 </td>
                                             <?php endif; ?>
                                         </tr>
@@ -159,11 +170,7 @@
                                 <?php else: ?>
                                     <tr>
                                         <td colspan="<?= session()->get('role') === 'admin' ? '6' : '5' ?>" class="text-center text-muted">
-                                            <?php if (!empty($search) || !empty($location)): ?>
-                                                🔍 Tidak ada bahan yang sesuai dengan pencarian
-                                            <?php else: ?>
-                                                🧪 Tidak ada data bahan
-                                            <?php endif; ?>
+                                            <?= (!empty($search) || !empty($location)) ? 'Tidak ada bahan yang sesuai dengan pencarian' : 'Tidak ada data bahan' ?>
                                         </td>
                                     </tr>
                                 <?php endif; ?>
@@ -172,10 +179,10 @@
                     </div>
                 </div>
 
+                <!-- Pagination -->
                 <?php if (($totalPages ?? 1) > 1): ?>
                     <div class="mt-3">
-                        <?php 
-                        $currentPage = $currentPage ?? 1;
+                        <?php
                         $searchQuery = !empty($search) ? "&search=" . urlencode($search) : "";
                         $locationQuery = !empty($location) ? "&location=" . urlencode($location) : "";
                         $queryString = $searchQuery . $locationQuery;
@@ -187,7 +194,9 @@
                                         <a class="page-link" href="/inventory/daftar-bahan?page=<?= $currentPage - 1 ?><?= $queryString ?>">← Sebelumnya</a>
                                     </li>
                                 <?php endif; ?>
-                                <li class="page-item active"><span class="page-link">Halaman <?= $currentPage ?> dari <?= $totalPages ?></span></li>
+                                <li class="page-item active">
+                                    <span class="page-link">Halaman <?= $currentPage ?> dari <?= $totalPages ?></span>
+                                </li>
                                 <?php if ($currentPage < $totalPages): ?>
                                     <li class="page-item">
                                         <a class="page-link" href="/inventory/daftar-bahan?page=<?= $currentPage + 1 ?><?= $queryString ?>">Selanjutnya →</a>
@@ -197,16 +206,16 @@
                         </nav>
                     </div>
                 <?php endif; ?>
-
             </div>
         </div>
     </div>
 </div>
 
+<!-- Script Hapus -->
 <?php if (session()->get('role') === 'admin'): ?>
 <script>
     function hapusBahan(id, nama) {
-        if (confirm(`⚠️ Yakin ingin menghapus bahan "${nama}"?\n\nData yang dihapus tidak dapat dikembalikan!`)) {
+        if (confirm(`Yakin ingin menghapus bahan "${nama}"?\nData yang dihapus tidak dapat dikembalikan!`)) {
             fetch(`/inventory/hapus-bahan/${id}`, {
                 method: 'POST',
                 headers: {
@@ -218,14 +227,14 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('✅ Bahan berhasil dihapus!');
+                    alert('Bahan berhasil dihapus!');
                     location.reload();
                 } else {
-                    alert('❌ Error: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
             })
             .catch(error => {
-                alert('❌ Terjadi kesalahan saat menghapus data');
+                alert('Terjadi kesalahan saat menghapus data');
                 console.error('Error:', error);
             });
         }
@@ -233,7 +242,7 @@
 </script>
 <?php endif; ?>
 
-<!-- AdminLTE Scripts -->
+<!-- JS AdminLTE -->
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/jquery/jquery.min.js') ?>"></script>
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <script src="<?= base_url('adminlte/AdminLTE-3.2.0/dist/js/adminlte.min.js') ?>"></script>

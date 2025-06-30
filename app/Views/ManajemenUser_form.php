@@ -21,28 +21,45 @@
     <style>
         body {
             font-family: 'Poppins', 'Inter', sans-serif;
-            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/2.jpg') ?>') no-repeat center center fixed !important;
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/6.jpg') ?>') no-repeat center center fixed !important;
             background-size: cover !important;
+            position: relative;
         }
-        .wrapper, .content-wrapper {
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .wrapper,
+        .content-wrapper {
             background: transparent !important;
         }
+
         .section-title {
             font-size: 1.2rem;
             font-weight: 500;
-            border-left: 4px solidrgb(255, 255, 255);
+            border-left: 4px solid rgb(255, 255, 255);
             padding-left: 10px;
-            color:rgb(252, 252, 252);
+            color: rgb(252, 252, 252);
         }
+
         .dashboard-title {
             font-weight: 600;
             font-size: 1.75rem;
-            color:rgb(244, 244, 245);
+            color: rgb(244, 244, 245);
         }
+
         .welcome-text {
-            color:rgb(244, 244, 245);
+            color: rgb(244, 244, 245);
         }
-        
+
         /* Sembunyikan ikon pada badge role dan tombol aksi di tabel user */
         .table-user td i,
         .table-user .badge i,

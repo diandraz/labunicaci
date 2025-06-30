@@ -26,10 +26,22 @@
       font-family: 'Poppins', 'Inter', sans-serif;
       background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/3.jpg') ?>') no-repeat center center fixed;
       background-size: cover;
+      position: relative;
+    }
 
-      .login-logo a {
-        color: #fff !important;
-      }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    .login-logo a {
+      color: #fff !important;
     }
   </style>
   <link rel="icon" href="<?= base_url('assets/images/favicon.ico') ?>" type="image/x-icon">

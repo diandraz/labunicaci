@@ -16,12 +16,29 @@
     <link rel="stylesheet" href="<?= base_url('css/global.css') ?>">
           <!-- Custom Style -->
     <style>
-   body {
+ body {
             font-family: 'Poppins', 'Inter', sans-serif;
-            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/3.jpg') ?>') no-repeat center center fixed;
-            background-size: cover;
-            
+            background: url('<?= base_url('adminlte/AdminLTE-3.2.0/dist/img/1.jpg') ?>') no-repeat center center fixed !important;
+            background-size: cover !important;
+            position: relative;
         }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        .wrapper,
+        .content-wrapper {
+            background: transparent !important;
+        }
+
     .login-logo a {
     color: #fff !important;
 }
