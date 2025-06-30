@@ -130,7 +130,6 @@
                         <table class="table table-bordered table-hover text-nowrap">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Nama Alat</th>
                                     <th>Jumlah</th>
                                     <th>Lokasi</th>
@@ -143,27 +142,28 @@
                                 <?php if (!empty($items)): ?>
                                     <?php foreach ($items as $item): ?>
                                         <tr>
-                                            <td><?= $item['id_alat'] ?></td>
-                                            <td><?= esc($item['nama_alat']) ?></td>
-                                            <td>
-                                                <?= $item['jumlah_alat'] ?>
-                                                <?php if ($item['jumlah_alat'] <= 5): ?>
-                                                    <span class="text-danger">⚠️</span>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td><?= esc($item['lokasi']) ?></td>
-                                            <?php if (session()->get('role') === 'admin'): ?>
-                                                <td>
-                                                    <button class="btn btn-danger btn-sm" onclick="hapusAlat(<?= $item['id_alat'] ?>, '<?= esc($item['nama_alat']) ?>')">
-                                                        🗑️ Hapus
-                                                    </button>
-                                                </td>
-                                            <?php endif; ?>
-                                        </tr>
+    <td><?= esc($item['nama_alat']) ?></td>
+    <td>
+        <?= $item['jumlah_alat'] ?>
+        <?php if ($item['jumlah_alat'] <= 5): ?>
+            <span class="text-danger">⚠️</span>
+        <?php endif; ?>
+    </td>
+    <td><?= esc($item['lokasi']) ?></td>
+    <?php if (session()->get('role') === 'admin'): ?>
+        <td>
+            <button class="btn btn-danger btn-sm" onclick="hapusAlat(<?= $item['id_alat'] ?>, '<?= esc($item['nama_alat']) ?>')">
+                🗑️ Hapus
+            </button>
+        </td>
+    <?php endif; ?>
+</tr>
+
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="<?= session()->get('role') === 'admin' ? '5' : '4' ?>" class="text-center">
+                                        <td colspan="<?= session()->get('role') === 'admin' ? '4' : '3' ?>" class="text-center">
+
                                             <?php if (!empty($search) || !empty($location)): ?>
                                                 🔍 Tidak ada alat yang sesuai dengan pencarian
                                             <?php else: ?>
