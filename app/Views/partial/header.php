@@ -5,10 +5,16 @@
             <a href="/dashboard" class="nav-link">Dashboard</a>
         </li>
 
-        <!-- MANAJEMEN - Hanya untuk ADMIN -->
+        <!-- MANAJEMEN DROPDOWN - Hanya untuk ADMIN (FORMAT SAMA SEPERTI INVENTORY) -->
         <?php if (session()->get('role') === 'admin'): ?>
-        <li class="nav-item">
-            <a href="/manajemen" class="nav-link">Manajemen</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="manajemenDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Persediaan
+            </a>
+            <div class="dropdown-menu" aria-labelledby="manajemenDropdown">
+                <a class="dropdown-item" href="/manajemen/tambah"> Tambah Alat/Bahan</a>
+                <a class="dropdown-item" href="/manajemen/kurang"> Kurangi Alat/Bahan</a>
+            </div>
         </li>
         <?php endif; ?>
 
@@ -26,10 +32,11 @@
         <!-- MANAJEMEN USER - Hanya untuk ADMIN -->
         <?php if (session()->get('role') === 'admin'): ?>
         <li class="nav-item">
-            <a href="/manajemen-user" class="nav-link">Manajemen User</a>
+            <a href="/manajemen-user" class="nav-link">Kelola Pengguna</a>
         </li>
         <?php endif; ?>
 
+        <!-- INVENTORY DROPDOWN (REFERENSI YANG BENAR) -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="inventoryDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Inventory

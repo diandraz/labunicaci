@@ -19,12 +19,14 @@ $routes->get('registrasi', 'Registrasi::index');
 $routes->post('registrasi/simpan', 'Registrasi::simpan');
 $routes->get('/login', 'Login::index');
 $routes->post('/login/auth', 'Login::auth');
+$routes->get('/login/refresh-captcha', 'Login::refreshCaptcha');  // TAMBAHAN: Route refresh captcha
 $routes->get('/logout', 'Login::logout');
 
 // =================== Hanya Admin ===================
 $routes->group('', ['filter' => 'role:admin'], function($routes) {
-    $routes->get('/manajemen', 'Manajemen::index');
+    $routes->get('/manajemen/tambah', 'Manajemen::tambahPage');
     $routes->post('/manajemen/tambah', 'Manajemen::tambah');
+    $routes->get('/manajemen/kurang', 'Manajemen::kurangPage');
     $routes->post('/manajemen/kurang', 'Manajemen::kurang');
 
     $routes->get('user', 'User::index');
@@ -82,8 +84,3 @@ $routes->group('', ['filter' => 'role:user'], function($routes) {
 $routes->get('/api/nama-by-jenis', 'Pemakaian::getNamaByJenis');
 $routes->get('/api/detail-item', 'Pemakaian::getDetailItem');
 
-// Debug routes (hapus setelah testing)
-$routes->get('test-email', 'TestEmail::index');
-$routes->get('test-basic-email', 'TestEmail::testBasicEmail');
-$routes->get('debug-email', 'DebugEmail::inspectEmail');
-$routes->get('debug-direct-email', 'DebugEmail::testDirectEmail');
